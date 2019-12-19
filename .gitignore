@@ -1,0 +1,14 @@
+# IDEs metadata
+.idea
+cmake-build-debug
+
+# Python related
+__pycache__/
+.ipynb_checkpoints/
+
+# Build directory
+build/
+
+# Other files
+*.dat
+notes.md
