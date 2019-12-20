@@ -11,6 +11,8 @@
 
 auto constant_func = [](const std::vector<unsigned>& mols, const double& area) { return 1.0; };
 
+namespace StoSpa2 {
+
 class Voxel {
 protected:
     double m_voxel_size;
@@ -19,9 +21,9 @@ protected:
 
     std::vector<unsigned> m_molecules;
 
-    std::vector<Reaction> m_reactions;
+    std::vector<StoSpa2::Reaction> m_reactions;
 
-    std::vector<Reaction> m_extrande_reaction;
+    std::vector<StoSpa2::Reaction> m_extrande_reaction;
 
 public:
 
@@ -30,7 +32,7 @@ public:
         m_molecules = std::move(inital_num);
 
         if (extrande) {
-            m_extrande_reaction.emplace_back(Reaction(0.0, constant_func, {0}));
+            m_extrande_reaction.emplace_back(StoSpa2::Reaction(0.0, constant_func, {0}));
         }
     }
 
@@ -42,7 +44,7 @@ public:
         return m_voxel_size;
     }
 
-    void add_reaction(Reaction r) {
+    void add_reaction(StoSpa2::Reaction r) {
         if (r.stoichiometry.size() != m_molecules.size()) {
             std::string m = "Simulator::add_reaction: r.stoichiometry.size() != m_molecules.size()";
             throw std::runtime_error(m);
@@ -53,7 +55,7 @@ public:
         }
     }
 
-    std::vector<Reaction> get_reactions() {
+    std::vector<StoSpa2::Reaction> get_reactions() {
         return m_reactions;
     }
 
@@ -75,7 +77,7 @@ public:
         return total;
     }
 
-    Reaction& pick_reaction(double random_num) {
+    StoSpa2::Reaction& pick_reaction(double random_num) {
         double r_a_0 = random_num * a_0;
 
         unsigned reaction_idx = 0;
@@ -139,10 +141,11 @@ public:
     friend bool operator != (const Voxel& v1, const Voxel& v2) {
         return !(v1 == v2);
     }
-
 };
 
-void add_reaction_to_voxels(const Reaction& r, std::vector<Voxel>& voxels) {
+}
+
+void add_reaction_to_voxels(const StoSpa2::Reaction& r, std::vector<StoSpa2::Voxel>& voxels) {
     for (auto& v : voxels) {
         v.add_reaction(r);
     }

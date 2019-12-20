@@ -30,6 +30,8 @@ First, we include the main header from StoSpa2 and we start the main function th
 ```
 #include "simulator.hpp"
 
+using namespace StoSpa2;
+
 int main() {
 ```
 Within the `main` function we first define a lambda function for the propensity function of a diffusion reaction.

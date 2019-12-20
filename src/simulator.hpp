@@ -27,6 +27,8 @@ std::vector<T> operator*(const double& alpha, const std::vector<T>& vec)
     return output;
 }
 
+namespace StoSpa2 {
+
 class Simulator {
 protected:
     double inf = std::numeric_limits<double>::infinity();
@@ -36,7 +38,7 @@ protected:
     std::map<double, unsigned> next_reaction_times;
     std::vector<double> lookup_times;
 
-    std::vector<Voxel> m_voxels;
+    std::vector<StoSpa2::Voxel> m_voxels;
 
     /** Seed used for generating a random number. */
     unsigned m_seed;
@@ -80,7 +82,7 @@ protected:
 
 public:
 
-    explicit Simulator(std::vector<Voxel> voxels) {
+    explicit Simulator(std::vector<StoSpa2::Voxel> voxels) {
         // For generating random numbers from the uniform dist
         std::random_device rd;
         m_seed = rd();
@@ -108,7 +110,7 @@ public:
         return m_time;
     }
 
-    const std::vector<Voxel>& get_voxels() {
+    const std::vector<StoSpa2::Voxel>& get_voxels() {
         return m_voxels;
     }
 
@@ -186,5 +188,7 @@ public:
         }
     }
 };
+
+}
 
 #endif // SIMULATOR_HPP

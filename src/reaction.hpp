@@ -25,6 +25,8 @@ bool operator != (const std::vector<T>& v1, const std::vector<T>& v2) {
     return !(v1 == v2);
 }
 
+namespace StoSpa2 {
+
 class Reaction {
 protected:
 
@@ -82,5 +84,8 @@ public:
         return !(r1 == r2);
     }
 };
+
+}
+
 
 #endif // REACTION_HPP

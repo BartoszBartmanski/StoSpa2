@@ -1,6 +1,8 @@
 
 #include "simulator.hpp"
 
+using namespace StoSpa2;
+
 int main() {
     auto diffusion = [](const std::vector<unsigned>& mols, const double& area) { return mols[0]; };
 

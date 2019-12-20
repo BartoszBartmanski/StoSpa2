@@ -2,6 +2,8 @@
 #include <chrono>
 #include "simulator.hpp"
 
+namespace ss = StoSpa2;
+
 int main(int argc, char **argv) {
     // We define the std::functions for reactions
     auto decay = [](const std::vector<unsigned>& mols, const double& area) { return (double)mols[0]; };
@@ -21,10 +23,10 @@ int main(int argc, char **argv) {
     {
         auto start = std::chrono::system_clock::now();
 
-        Voxel vox({100}, 1.0);
-        vox.add_reaction(Reaction(0.01, decay, {-1}));  // decay reaction
-        vox.add_reaction(Reaction(1.0, prod, {1}));  // production reaction
-        Simulator sim({vox});
+        ss::Voxel vox({100}, 1.0);
+        vox.add_reaction(ss::Reaction(0.01, decay, {-1}));  // decay reaction
+        vox.add_reaction(ss::Reaction(1.0, prod, {1}));  // production reaction
+        ss::Simulator sim({vox});
         sim.advance(100000000);
 
         auto end = std::chrono::system_clock::now();

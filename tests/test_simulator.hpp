@@ -5,11 +5,13 @@
 // StoSpa2 includes
 #include "simulator.hpp"
 
+namespace ss = StoSpa2;
+
 TEST_CASE("Testing Simulator class") {
     auto decay = [](const std::vector<unsigned>& mols, const double& area) { return mols[0]; };
-    Voxel v({10}, 1.0);
-    v.add_reaction(Reaction(1.5, decay, {-1}));
-    Simulator s({v});
+    ss::Voxel v({10}, 1.0);
+    v.add_reaction(ss::Reaction(1.5, decay, {-1}));
+    ss::Simulator s({v});
 
     SECTION("Testing Constructor") {
         REQUIRE(s.get_time() == 0);

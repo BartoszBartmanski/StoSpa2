@@ -5,10 +5,12 @@
 // StoSpa2 includes
 #include "voxel.hpp"
 
+namespace ss = StoSpa2;
+
 TEST_CASE("Testing Voxel class") {
     auto decay = [](const std::vector<unsigned>& mols, const double& area) { return mols[0]; };
 
-    Voxel v({10}, 1.0);
+    ss::Voxel v({10}, 1.0);
 
     SECTION("Testing Constructor") {
         auto vec = v.get_molecules();
@@ -20,16 +22,16 @@ TEST_CASE("Testing Voxel class") {
     }
 
     SECTION("Testing member functions") {
-        Reaction r(1.5, decay, {-1});
+        ss::Reaction r(1.5, decay, {-1});
         v.add_reaction(r);
 
-        std::vector<Reaction> reactions = v.get_reactions();
+        std::vector<ss::Reaction> reactions = v.get_reactions();
         REQUIRE(reactions.size() == 1);
         REQUIRE(reactions[0] == r);
 
         reactions[0].set_rate(20);
 
-        std::vector<Reaction> reactions2 = v.get_reactions();
+        std::vector<ss::Reaction> reactions2 = v.get_reactions();
         REQUIRE(reactions[0] != reactions2[0]);
 
         REQUIRE(v.get_total_propensity() == 15);

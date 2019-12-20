@@ -5,10 +5,12 @@
 // StoSpa2 includes
 #include "reaction.hpp"
 
+namespace ss = StoSpa2;
+
 TEST_CASE("Testing Reacton class") {
     auto constant_func = [](const std::vector<unsigned>& mols, const double& area) { return 1.0; };
 
-    Reaction r(0.0, constant_func, {0});
+    ss::Reaction r(0.0, constant_func, {0});
 
     SECTION("Testing Constructor") {
         REQUIRE(r.get_rate() == 0.0);
@@ -26,7 +28,7 @@ TEST_CASE("Testing Reacton class") {
     }
 
     SECTION("Testing member operators") {
-        Reaction r2(0.0, constant_func, {0});
+        ss::Reaction r2(0.0, constant_func, {0});
         REQUIRE(r == r2);
     }
 }
