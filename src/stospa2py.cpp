@@ -41,6 +41,7 @@ PYBIND11_MODULE(stospa2py, m) {
        .def("get_seed", &ss::Simulator::get_seed)
        .def("get_time", &ss::Simulator::get_time)
        .def("get_voxels", &ss::Simulator::get_voxels)
+       .def("get_molecules", &ss::Simulator::get_molecules)
        .def("step", &ss::Simulator::step)
        .def("advance", &ss::Simulator::advance)
        .def("run", &ss::Simulator::run);

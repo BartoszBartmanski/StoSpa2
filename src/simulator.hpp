@@ -114,6 +114,19 @@ public:
         return m_voxels;
     }
 
+    std::vector<unsigned> get_molecules() {
+        std::vector<unsigned> output;
+        if (m_voxels.size() > 0) {
+            output.reserve(m_voxels.size() * m_voxels[0].get_molecules().size());
+            std::vector<unsigned> tmp;
+            for (auto& v : m_voxels) {
+                tmp = v.get_molecules();
+                output.insert(output.end(), tmp.begin(), tmp.end());
+            }
+        }
+        return output;
+    }
+
     void step() {
 
         // Pick the smallest time from next_reaction_times
