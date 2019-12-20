@@ -4,7 +4,7 @@ A C++ software package for stochastic simulations of spatially extended systems.
 
 ## Requirements
 
-* C++
+* cmake
 * pybind11
 * Python >= 3.6
 
