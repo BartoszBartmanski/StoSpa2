@@ -29,7 +29,7 @@ add_subdirectory(tests)
 
 # Add pybind11 and compile a python module
 add_subdirectory(pybind11)
-pybind11_add_module(stospa2py src/stospa2py.cpp)
+pybind11_add_module(pystospa src/pystospa.cpp)
 
 # Add an executable for the example
 add_executable(example src/example.cpp)

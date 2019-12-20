@@ -5,6 +5,9 @@ cmake-build-debug
 # Python related
 __pycache__/
 .ipynb_checkpoints/
+.eggs/
+dist/
+pystospa.egg-info/
 
 # Build directory
 build/
