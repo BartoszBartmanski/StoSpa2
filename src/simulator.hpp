@@ -142,6 +142,7 @@ public:
     }
 
     void write_header(std::ofstream& handle) {
+        handle << "# seed = " << m_seed << std::endl;
         handle << "# time ";
         for (unsigned i=0; i< m_voxels.size(); i++) {
             handle << "voxel_" << i << " ";
