@@ -15,7 +15,7 @@ namespace ss = StoSpa2;
 // Define a shortcut for defining the propensity function (p_f)
 typedef std::function<double (const std::vector<unsigned>&, const double&)> p_f;
 
-PYBIND11_MODULE(stospa2py, m) {
+PYBIND11_MODULE(pystospa, m) {
     m.doc() = "pybind11 stospa2 plugin"; // optional module docstring
     py::class_<ss::Reaction>(m, "Reaction")
         .def(py::init<double, p_f, std::vector<int>>())
