@@ -17,6 +17,6 @@ int main() {
     }
 
     // We create a simulator instance and run the simulation.
-    Simulator s2(vs);
-    s2.run("example.dat", 0.01, 1000);
+    Simulator sim(vs);
+    sim.run("example.dat", 0.01, 1000);
 }

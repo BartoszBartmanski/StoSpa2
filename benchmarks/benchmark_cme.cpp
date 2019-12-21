@@ -9,25 +9,22 @@ int main(int argc, char **argv) {
     auto decay = [](const std::vector<unsigned>& mols, const double& area) { return (double)mols[0]; };
     auto prod = [](const std::vector<unsigned>& mols, const double& area) { return area; };
 
+    ss::Voxel vox({100}, 1.0);
+    vox.add_reaction(ss::Reaction(0.01, decay, {-1}));  // decay reaction
+    vox.add_reaction(ss::Reaction(1.0, prod, {1}));  // production reaction
+
     // We create the file for outputting time taken to finish one simulation
-    std::string fname = "benchmarks.dat";
-    if (argc > 1) {
-        fname = std::string(argv[1]);
-    }
     std::ofstream outfile;
-    outfile.open(fname);
-    outfile << "# time_taken_in_miliseconds";
+    outfile.open(argc > 1 ? std::string(argv[1]) : "benchmarks_cme.dat");
+    outfile << "# time_taken_in_miliseconds" << std::endl;
 
     // We run the simulation 10 times and save the time taken each time
     for (unsigned i=0; i<10; i++)
     {
         auto start = std::chrono::system_clock::now();
 
-        ss::Voxel vox({100}, 1.0);
-        vox.add_reaction(ss::Reaction(0.01, decay, {-1}));  // decay reaction
-        vox.add_reaction(ss::Reaction(1.0, prod, {1}));  // production reaction
         ss::Simulator sim({vox});
-        sim.advance(100000000);
+        sim.advance(1000000);
 
         auto end = std::chrono::system_clock::now();
 

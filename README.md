@@ -52,8 +52,8 @@ for (unsigned i=0; i<vs.size()-1; i++) {
 ```
 and finally, we create a simulator instance and run the simulation.
 ```
-Simulator s2(vs);
-s2.run("example.dat", 0.01, 1000);
+Simulator sim(vs);
+sim.run("example.dat", 0.01, 1000);
 }
 ```
 

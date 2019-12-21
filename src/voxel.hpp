@@ -118,10 +118,12 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const Voxel& v)
     {
-        os << "Voxel object: voxel_size = " << v.m_voxel_size << "; molecules =";
+        os << "Voxel object: molecules =";
         for (const auto& mol : v.m_molecules) {
             os << " " << mol;
         }
+        os << "; voxel_size = " << v.m_voxel_size;
+        os << "; total_propensity = " << v.a_0 << ";";
 
         for (const auto& r : v.m_reactions) {
             os << std::endl << "\t" << r;
