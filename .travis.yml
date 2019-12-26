@@ -1,24 +1,24 @@
 # will build a C++ programme
 language: cpp
 os: linux
+dist: xenial
+sudo: require
 compiler: gcc
 
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-7
+      - g++-7
+      - cmake
 
 # install dependencies
 install:
     - git submodule update --init --recursive
     - sudo apt-get update
-    # We do this conditionally because it saves us some downloading if the
-    # version is the same.
-    - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-        wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-      else
-        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-      fi
+    - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
     - bash miniconda.sh -b -p $HOME/miniconda
     - source "$HOME/miniconda/etc/profile.d/conda.sh"
     - hash -r
@@ -26,7 +26,7 @@ install:
     - conda update -q conda
     - conda info -a
 
-    - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION 
+    - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
     - conda activate test-environment
 
 
@@ -37,6 +37,12 @@ before_script:
 
 # build and test
 script:
+    # Export CC and CXX to tell cmake which compiler to use
+    - export CC=/usr/bin/gcc-7
+    - export CXX=/usr/bin/g++-7
+    # Check versions of gcc, g++ and cmake
+    - gcc -v && g++ -v && cmake --version
+    # Run your build commands next
     - cmake ../ -DCMAKE_BUILD_TYPE=Debug
     - make -j2
     - make all
