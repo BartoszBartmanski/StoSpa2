@@ -20,7 +20,7 @@ message("-- CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message("-- CMAKE_CXX_FLAGS:${CMAKE_CXX_FLAGS}")
 
 # Projects need c++14 standard - for make_unique and make_shared
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 # Include all the header files and add executables found within benchmarks and tests directories
 include_directories(src)

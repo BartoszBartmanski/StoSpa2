@@ -73,8 +73,16 @@ protected:
         double new_time = m_time + exponential(m_voxels[index].get_total_propensity());
 
         // Update next_reaction_times
-        next_reaction_times.erase(lookup_times[index]);
-        next_reaction_times.emplace(std::make_pair(new_time, index));
+        if (lookup_times[index] < inf) {
+            auto nh = next_reaction_times.extract(next_reaction_times.find(lookup_times[index]));
+            if (!nh.empty()) {
+                nh.key() = new_time;
+                next_reaction_times.insert(std::move(nh));
+            }
+        }
+        else {
+            next_reaction_times.emplace(std::make_pair(new_time, index));
+        }
 
         // Update lookup_times
         lookup_times[index] = new_time;
@@ -116,13 +124,9 @@ public:
 
     std::vector<unsigned> get_molecules() {
         std::vector<unsigned> output;
-        if (m_voxels.size() > 0) {
-            output.reserve(m_voxels.size() * m_voxels[0].get_molecules().size());
-            std::vector<unsigned> tmp;
-            for (auto& v : m_voxels) {
-                tmp = v.get_molecules();
-                output.insert(output.end(), tmp.begin(), tmp.end());
-            }
+        for (auto& vox : m_voxels) {
+            auto mols = vox.get_molecules();
+            output.insert(output.end(), mols.begin(), mols.end());
         }
         return output;
     }
