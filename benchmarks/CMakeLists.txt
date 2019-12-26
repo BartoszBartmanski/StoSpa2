@@ -1,3 +1,4 @@
 
 add_executable(benchmark_cme benchmark_cme.cpp)
 add_executable(benchmark_diffusion benchmark_diffusion.cpp)
+add_executable(benchmark_schnakenberg benchmark_schnakenberg.cpp)

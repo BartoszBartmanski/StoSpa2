@@ -8,8 +8,8 @@ int main(int argc, char **argv) {
     auto diffusion = [](const std::vector<unsigned>& mols, const double& area) { return mols[0]; };
 
     // First we create an array of voxels with 10000 molecules in the leftmost one
-    std::vector<ss::Voxel> vs(9, ss::Voxel({0}, 1.0));
-    vs.insert(vs.begin(), ss::Voxel({10000}, 1.0));
+    std::vector<ss::Voxel> vs(999, ss::Voxel({0}, 0.01));
+    vs.insert(vs.begin(), ss::Voxel({10000}, 0.01));
 
     // We add diffusion reactions to all the voxels
     for (unsigned i=0; i<vs.size()-1; i++) {
