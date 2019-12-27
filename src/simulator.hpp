@@ -16,11 +16,9 @@
 #include "voxel.hpp"
 
 template<typename T>
-std::vector<T> operator*(const double& alpha, const std::vector<T>& vec)
-{
+std::vector<T> operator*(const double& alpha, const std::vector<T>& vec) {
     std::vector<T> output(vec.size());
-    for (unsigned i=0; i<vec.size(); i++)
-    {
+    for (unsigned i=0; i<vec.size(); i++) {
         output[i] = alpha * vec[i];
     }
 
@@ -78,6 +76,9 @@ protected:
             if (!nh.empty()) {
                 nh.key() = new_time;
                 next_reaction_times.insert(std::move(nh));
+            }
+            else {
+                throw std::runtime_error("Simulator::update_next_reaction_time: could not find the time!");
             }
         }
         else {

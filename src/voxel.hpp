@@ -59,6 +59,10 @@ public:
         return m_reactions;
     }
 
+    void clear_reactions() {
+        m_reactions.clear();
+    }
+
     double get_total_propensity() {
         double total = 0;
         for (auto& reaction : m_reactions) {
@@ -112,12 +116,7 @@ public:
         }
     }
 
-    void clear_reactions() {
-        m_reactions.clear();
-    }
-
-    friend std::ostream& operator << (std::ostream& os, const Voxel& v)
-    {
+    friend std::ostream& operator << (std::ostream& os, const Voxel& v) {
         os << "Voxel object: molecules =";
         for (const auto& mol : v.m_molecules) {
             os << " " << mol;
