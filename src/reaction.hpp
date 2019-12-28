@@ -29,6 +29,7 @@ namespace StoSpa2 {
 
 class Reaction {
 protected:
+    double m_initial_rate;
 
     double m_rate;
 
@@ -45,6 +46,7 @@ public:
         stoichiometry(std::move(stoichiometry_vec)),
         diffusion_idx(diffusion_index) {
 
+        m_initial_rate = rate;
         m_rate = rate;
         m_propensity = std::move(propensity);
     }
@@ -55,6 +57,12 @@ public:
 
     double get_rate() {
         return m_rate;
+    }
+
+    void update_properties(const double& factor) {
+        if (diffusion_idx >=0) {
+            m_rate = factor * m_initial_rate;
+        }
     }
 
     double get_propensity(const std::vector<unsigned>& num_molecules, const double& voxel_size) {

@@ -25,15 +25,29 @@ protected:
 
     std::vector<StoSpa2::Reaction> m_extrande_reaction;
 
+    double m_initial_voxel_size;
+    std::function<double (const double&)> m_growth_func;
+    bool m_growing;
+
 public:
 
-    Voxel(std::vector<unsigned> inital_num, double voxel_size, bool extrande=false) {
+    Voxel(std::vector<unsigned> inital_num, double voxel_size) {
         m_voxel_size = voxel_size;
+        m_initial_voxel_size = voxel_size;
         m_molecules = std::move(inital_num);
 
-        if (extrande) {
-            m_extrande_reaction.emplace_back(StoSpa2::Reaction(0.0, constant_func, {0}));
-        }
+        m_growing = false;
+        m_growth_func = [](const double& time) { return 1.0; };
+    }
+
+    Voxel(std::vector<unsigned> inital_num,  double voxel_size, std::function<double (const double&)> growth) {
+        m_voxel_size = voxel_size;
+        m_initial_voxel_size = voxel_size;
+        m_molecules = std::move(inital_num);
+
+        m_growing = true;
+        m_growth_func = std::move(growth);
+        add_extrande();
     }
 
     std::vector<unsigned> get_molecules() {
@@ -42,6 +56,28 @@ public:
 
     double get_voxel_size() {
         return m_voxel_size;
+    }
+
+    bool is_growing() {
+        return m_growing;
+    }
+
+    void update_properties(const double& time) {
+        if (m_growing) {
+            double new_factor = m_growth_func(time);
+            m_voxel_size = new_factor * m_initial_voxel_size;
+            double diff_factor = 1.0 / (new_factor * new_factor);
+
+            for (auto& reaction : m_reactions) {
+                reaction.update_properties(diff_factor);
+            }
+        }
+    }
+
+    void add_extrande() {
+        if (m_extrande_reaction.empty()) {
+            m_extrande_reaction.emplace_back(StoSpa2::Reaction(0.0, constant_func, {0}));
+        }
     }
 
     void add_reaction(StoSpa2::Reaction r) {
@@ -122,6 +158,7 @@ public:
             os << " " << mol;
         }
         os << "; voxel_size = " << v.m_voxel_size;
+        os << "; growing = " << (v.m_growing ? "true" : "false");
         os << "; total_propensity = " << v.a_0 << ";";
 
         for (const auto& r : v.m_reactions) {

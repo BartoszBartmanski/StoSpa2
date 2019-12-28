@@ -138,6 +138,8 @@ public:
         m_time = (*next_reaction_times.begin()).first;
         auto voxel_idx = (*next_reaction_times.begin()).second;
 
+        m_voxels[voxel_idx].update_properties(m_time);
+
         if (m_time < inf) {
             // Pick a reaction with the corresponding voxel
             auto& r = m_voxels[voxel_idx].pick_reaction(m_uniform(m_gen));
