@@ -12,8 +12,10 @@
 namespace py = pybind11;
 namespace ss = StoSpa2;
 
-// Define a shortcut for defining the propensity function (p_f)
+// Define a typedef for propensity functions (p_f)
 typedef std::function<double (const std::vector<unsigned>&, const double&)> p_f;
+// Define a typedef for growth functions (g_f)
+typedef std::function<double (const double&)> g_f;
 
 PYBIND11_MODULE(pystospa, m) {
     m.doc() = "pybind11 stospa2 plugin"; // optional module docstring
@@ -26,7 +28,7 @@ PYBIND11_MODULE(pystospa, m) {
 
     py::class_<ss::Voxel>(m, "Voxel")
         .def(py::init<std::vector<unsigned>, double>())
-        .def(py::init<std::vector<unsigned>, double, bool>())
+        .def(py::init<std::vector<unsigned>, double, g_f>())
         .def("get_molecules", &ss::Voxel::get_molecules)
         .def("get_voxel_size", &ss::Voxel::get_voxel_size)
         .def("add_reaction", &ss::Voxel::add_reaction)
