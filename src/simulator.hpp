@@ -71,19 +71,8 @@ protected:
         double new_time = m_time + exponential(m_voxels[index].get_total_propensity());
 
         // Update next_reaction_times
-        if (lookup_times[index] < inf) {
-            auto nh = next_reaction_times.extract(next_reaction_times.find(lookup_times[index]));
-            if (!nh.empty()) {
-                nh.key() = new_time;
-                next_reaction_times.insert(std::move(nh));
-            }
-            else {
-                throw std::runtime_error("Simulator::update_next_reaction_time: could not find the time!");
-            }
-        }
-        else {
-            next_reaction_times.emplace(std::make_pair(new_time, index));
-        }
+        next_reaction_times.erase(lookup_times[index]);
+        next_reaction_times.emplace(std::make_pair(new_time, index));
 
         // Update lookup_times
         lookup_times[index] = new_time;
