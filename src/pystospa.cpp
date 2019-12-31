@@ -29,6 +29,7 @@ PYBIND11_MODULE(pystospa, m) {
     py::class_<ss::Voxel>(m, "Voxel")
         .def(py::init<std::vector<unsigned>, double>())
         .def(py::init<std::vector<unsigned>, double, g_f>())
+        .def(py::init<std::vector<unsigned>, double, std::vector<g_f>>())
         .def("get_molecules", &ss::Voxel::get_molecules)
         .def("get_voxel_size", &ss::Voxel::get_voxel_size)
         .def("add_reaction", &ss::Voxel::add_reaction)
