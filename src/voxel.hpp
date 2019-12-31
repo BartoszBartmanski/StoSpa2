@@ -9,7 +9,8 @@
 // other header files
 #include "reaction.hpp"
 
-auto constant_func = [](const std::vector<unsigned>& mols, const double& area) { return 1.0; };
+// Typedef for the growth function
+typedef std::function<double (const double&)> g_f;
 
 namespace StoSpa2 {
 
@@ -26,7 +27,7 @@ protected:
     std::vector<StoSpa2::Reaction> m_extrande_reaction;
 
     double m_initial_voxel_size;
-    std::function<double (const double&)> m_growth_func;
+    std::vector<std::function<double (const double&)>> m_growth_func;
     bool m_growing;
 
 public:
@@ -37,10 +38,21 @@ public:
         m_molecules = std::move(inital_num);
 
         m_growing = false;
-        m_growth_func = [](const double& time) { return 1.0; };
+        auto one = [](const double& time) { return 1.0; };
+        m_growth_func.emplace_back(one);
     }
 
-    Voxel(std::vector<unsigned> inital_num,  double voxel_size, std::function<double (const double&)> growth) {
+    Voxel(std::vector<unsigned> inital_num,  double voxel_size, g_f growth) {
+        m_voxel_size = voxel_size;
+        m_initial_voxel_size = voxel_size;
+        m_molecules = std::move(inital_num);
+
+        m_growing = true;
+        m_growth_func.emplace_back(std::move(growth));
+        add_extrande();
+    }
+
+    Voxel(std::vector<unsigned> inital_num,  double voxel_size, std::vector<g_f> growth) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
         m_molecules = std::move(inital_num);
@@ -64,9 +76,12 @@ public:
 
     void update_properties(const double& time) {
         if (m_growing) {
-            double new_factor = m_growth_func(time);
+            double new_factor = 1.0;
+            for (auto& growth_func : m_growth_func) {
+                new_factor *= growth_func(time);
+            }
             m_voxel_size = new_factor * m_initial_voxel_size;
-            double diff_factor = 1.0 / (new_factor * new_factor);
+            double diff_factor = 1.0 / (m_growth_func.size() == 1 ? new_factor * new_factor : new_factor);
 
             for (auto& reaction : m_reactions) {
                 reaction.update_properties(diff_factor);
@@ -75,6 +90,7 @@ public:
     }
 
     void add_extrande() {
+        auto constant_func = [](const std::vector<unsigned>& mols, const double& area) { return 1.0; };
         if (m_extrande_reaction.empty()) {
             m_extrande_reaction.emplace_back(StoSpa2::Reaction(0.0, constant_func, {0}));
         }
