@@ -8,6 +8,7 @@ __pycache__/
 .eggs/
 dist/
 pystospa.egg-info/
+test.ipynb
 
 # Build directory
 build/

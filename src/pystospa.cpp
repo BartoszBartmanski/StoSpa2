@@ -33,6 +33,7 @@ PYBIND11_MODULE(pystospa, m) {
         .def("get_molecules", &ss::Voxel::get_molecules)
         .def("get_voxel_size", &ss::Voxel::get_voxel_size)
         .def("add_reaction", &ss::Voxel::add_reaction)
+        .def("get_reactions", &ss::Voxel::get_reactions)
         .def("get_total_propensity", &ss::Voxel::get_total_propensity)
         .def("pick_reaction", &ss::Voxel::pick_reaction)
         .def("update_molecules", &ss::Voxel::update_molecules)
