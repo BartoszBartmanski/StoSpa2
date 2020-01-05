@@ -9,6 +9,12 @@
 
 namespace StoSpa2 {
 
+void add_reaction(std::vector<StoSpa2::Voxel>& voxels, const StoSpa2::Reaction& r) {
+    for (auto& v : voxels) {
+        v.add_reaction(r);
+    }
+}
+
 void add_diffusion(std::vector<StoSpa2::Voxel>& voxels,
                    const std::vector<std::vector<double>>& jump_rates,
                    const std::function<double (const std::vector<unsigned>&, const double&)>& propensity,
