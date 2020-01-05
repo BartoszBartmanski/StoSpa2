@@ -199,10 +199,4 @@ public:
 
 }
 
-void add_reaction_to_voxels(const StoSpa2::Reaction& r, std::vector<StoSpa2::Voxel>& voxels) {
-    for (auto& v : voxels) {
-        v.add_reaction(r);
-    }
-}
-
 #endif
