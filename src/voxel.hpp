@@ -32,30 +32,30 @@ protected:
 
 public:
 
-    Voxel(std::vector<unsigned> inital_num, double voxel_size) {
+    Voxel(std::vector<unsigned> initial_num, double voxel_size) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
-        m_molecules = std::move(inital_num);
+        m_molecules = std::move(initial_num);
 
         m_growing = false;
         auto one = [](const double& time) { return 1.0; };
         m_growth_func.emplace_back(one);
     }
 
-    Voxel(std::vector<unsigned> inital_num,  double voxel_size, g_f growth) {
+    Voxel(std::vector<unsigned> initial_num,  double voxel_size, g_f growth) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
-        m_molecules = std::move(inital_num);
+        m_molecules = std::move(initial_num);
 
         m_growing = true;
         m_growth_func.emplace_back(std::move(growth));
         add_extrande();
     }
 
-    Voxel(std::vector<unsigned> inital_num,  double voxel_size, std::vector<g_f> growth) {
+    Voxel(std::vector<unsigned> initial_num,  double voxel_size, std::vector<g_f> growth) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
-        m_molecules = std::move(inital_num);
+        m_molecules = std::move(initial_num);
 
         m_growing = true;
         m_growth_func = std::move(growth);
