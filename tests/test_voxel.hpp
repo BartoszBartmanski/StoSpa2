@@ -38,8 +38,11 @@ TEST_CASE("Testing Voxel class") {
 
         REQUIRE(v.pick_reaction(0.5) == r);
 
-        v.update_molecules(r.stoichiometry);
+        v.add_vector(r.stoichiometry);
         REQUIRE(v.get_molecules()[0] == 9);
+
+        v.subtract_vector(r.stoichiometry);
+        REQUIRE(v.get_molecules()[0] == 10);
 
         v.clear_reactions();
         REQUIRE(v.get_reactions().size() == 0);

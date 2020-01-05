@@ -15,16 +15,6 @@
 #include "reaction.hpp"
 #include "voxel.hpp"
 
-template<typename T>
-std::vector<T> operator*(const double& alpha, const std::vector<T>& vec) {
-    std::vector<T> output(vec.size());
-    for (unsigned i=0; i<vec.size(); i++) {
-        output[i] = alpha * vec[i];
-    }
-
-    return output;
-}
-
 namespace StoSpa2 {
 
 class Simulator {
@@ -134,13 +124,13 @@ public:
             auto& r = m_voxels[voxel_idx].pick_reaction(m_uniform(m_gen));
 
             // Update the time until the next reaction for this voxel
-            m_voxels[voxel_idx].update_molecules(r.stoichiometry);
+            m_voxels[voxel_idx].add_vector(r.stoichiometry);
             update_next_reaction_time(voxel_idx);
 
             //TODO: what if r.diffusion_idx is larger than number of voxels
             if (r.diffusion_idx >= 0) {
                 // Update the number of molecules
-                m_voxels[r.diffusion_idx].update_molecules(-1 * r.stoichiometry);
+                m_voxels[r.diffusion_idx].subtract_vector(r.stoichiometry);
                 update_next_reaction_time(r.diffusion_idx);
             }
         }

@@ -159,11 +159,20 @@ public:
         }
     }
 
-    void update_molecules(const std::vector<int>& stoichiometry_vec) {
+    void add_vector(const std::vector<int>& stoichiometry_vec) {
         for (unsigned i=0; i<stoichiometry_vec.size(); i++) {
             // Need to be really careful here with not subtracting from zero
             if (m_molecules[i] + stoichiometry_vec[i] >= 0) {
                 m_molecules[i] += stoichiometry_vec[i];
+            }
+        }
+    }
+
+    void subtract_vector(const std::vector<int>& stoichiometry_vec) {
+        for (unsigned i=0; i<stoichiometry_vec.size(); i++) {
+            // Need to be really careful here with not subtracting from zero
+            if (m_molecules[i] - stoichiometry_vec[i] >= 0) {
+                m_molecules[i] -= stoichiometry_vec[i];
             }
         }
     }
