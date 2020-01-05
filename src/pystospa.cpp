@@ -35,8 +35,6 @@ PYBIND11_MODULE(pystospa, m) {
         .def("add_reaction", &ss::Voxel::add_reaction)
         .def("get_reactions", &ss::Voxel::get_reactions)
         .def("get_total_propensity", &ss::Voxel::get_total_propensity)
-        .def("pick_reaction", &ss::Voxel::pick_reaction)
-        .def("update_molecules", &ss::Voxel::update_molecules)
         .def("clear_reactions", &ss::Voxel::clear_reactions);
 
    py::class_<ss::Simulator>(m, "Simulator")

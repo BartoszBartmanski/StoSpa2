@@ -27,6 +27,14 @@ include_directories(src)
 add_subdirectory(benchmarks)
 add_subdirectory(tests)
 
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 # Add pybind11 and compile a python module
 add_subdirectory(pybind11)
 pybind11_add_module(pystospa src/pystospa.cpp)
