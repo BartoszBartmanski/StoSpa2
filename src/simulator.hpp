@@ -153,15 +153,16 @@ public:
         }
     }
 
-    void write_header(std::ofstream& handle) {
+    void write_header(std::ofstream& handle, const std::string& header="") {
+        handle << header << std::endl;
         handle << "# seed = " << m_seed << std::endl;
         handle << "# time voxels (" << m_voxels.size() << ")" << std::endl;
     }
 
-    void write_header(const std::string& filename) {
+    void write_header(const std::string& filename, const std::string& header="") {
         std::ofstream handle;
         handle.open(filename);
-        write_header(handle);
+        write_header(handle, header);
         handle.close();
     }
 
@@ -183,11 +184,11 @@ public:
         handle.close();
     }
 
-    void run(const std::string& name, double time_step, unsigned num_steps) {
+    void run(const std::string& name, double time_step, unsigned num_steps, const std::string& header="") {
         std::ofstream handle;
         handle.open(name);
 
-        write_header(handle);
+        write_header(handle, header);
         for (unsigned i=0; i<num_steps; i++) {
             advance(time_step * i);
             save(handle);
