@@ -154,7 +154,7 @@ public:
     }
 
     void write_header(std::ofstream& handle, const std::string& header="") {
-        handle << header << std::endl;
+        handle << header;
         handle << "# seed = " << m_seed << std::endl;
         handle << "# time voxels (" << m_voxels.size() << ")" << std::endl;
     }
