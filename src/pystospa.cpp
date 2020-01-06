@@ -46,5 +46,5 @@ PYBIND11_MODULE(pystospa, m) {
        .def("get_molecules", &ss::Simulator::get_molecules)
        .def("step", &ss::Simulator::step)
        .def("advance", &ss::Simulator::advance)
-       .def("run", &ss::Simulator::run);
+       .def("run", &ss::Simulator::run, py::arg("name")="test.dat", py::arg("time")=0.01, py::arg("num_steps")=100, py::arg("header")="");
 }
