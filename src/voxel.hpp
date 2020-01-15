@@ -25,6 +25,7 @@ protected:
     std::vector<StoSpa2::Reaction> m_reactions;
 
     std::vector<StoSpa2::Reaction> m_extrande_reaction;
+    double m_extrande_ratio;
 
     double m_initial_voxel_size;
     std::vector<std::function<double (const double&)>> m_growth_func;
@@ -42,23 +43,33 @@ public:
         m_growth_func.emplace_back(one);
     }
 
-    Voxel(std::vector<unsigned> initial_num,  double voxel_size, g_f growth) {
+    Voxel(std::vector<unsigned> initial_num,  double voxel_size, g_f growth, double extrande_ratio=2.0) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
         m_molecules = std::move(initial_num);
 
         m_growing = true;
         m_growth_func.emplace_back(std::move(growth));
+
+        if (extrande_ratio < 1.0) {
+            throw std::runtime_error("Voxel::Voxel: extrande_ratio needs to greater than 1.0");
+        }
+        m_extrande_ratio = extrande_ratio;
         add_extrande();
     }
 
-    Voxel(std::vector<unsigned> initial_num,  double voxel_size, std::vector<g_f> growth) {
+    Voxel(std::vector<unsigned> initial_num,  double voxel_size, std::vector<g_f> growth, double extrande_ratio=2.0) {
         m_voxel_size = voxel_size;
         m_initial_voxel_size = voxel_size;
         m_molecules = std::move(initial_num);
 
         m_growing = true;
         m_growth_func = std::move(growth);
+
+        if (extrande_ratio < 1.0) {
+            throw std::runtime_error("Voxel::Voxel: extrande_ratio needs to greater than 1.0");
+        }
+        m_extrande_ratio = extrande_ratio;
         add_extrande();
     }
 
@@ -72,6 +83,10 @@ public:
 
     bool is_growing() {
         return m_growing;
+    }
+
+    double get_extrande_ratio() {
+        return m_extrande_ratio;
     }
 
     void update_properties(const double& time) {
@@ -98,7 +113,7 @@ public:
 
     void add_reaction(StoSpa2::Reaction r) {
         if (r.stoichiometry.size() != m_molecules.size()) {
-            std::string m = "Simulator::add_reaction: r.stoichiometry.size() != m_molecules.size()";
+            std::string m = "Voxel::add_reaction: r.stoichiometry.size() != m_molecules.size()";
             throw std::runtime_error(m);
         }
 
@@ -115,18 +130,16 @@ public:
         m_reactions.clear();
     }
 
-    double get_total_propensity() {
+    double get_total_propensity(bool update=true) {
         double total = 0;
         for (auto& reaction : m_reactions) {
             total += reaction.get_propensity(m_molecules, m_voxel_size);
         }
 
+        if (!update) { return total; }
+
         if (m_extrande_reaction.size() == 1) {
-            double extrande_propensity = m_extrande_reaction[0].get_rate();
-            if (extrande_propensity < 0.5 * total) {
-                m_extrande_reaction[0].set_rate(total);
-            }
-            total += extrande_propensity;
+            total = m_extrande_ratio * total;
         }
         a_0 = total;
 
@@ -135,6 +148,13 @@ public:
 
     StoSpa2::Reaction& pick_reaction(double random_num) {
         double r_a_0 = random_num * a_0;
+
+        if ((m_extrande_reaction.size() == 1) and (a_0 - get_total_propensity(false) < 0)) {
+            std::string m = "Voxel::pick_reaction: extrande ratio (" + std::to_string(m_extrande_ratio) + ") is too low ";
+            m += "resulting in total propensity at current time (" + std::to_string(get_total_propensity(false)) + ") ";
+            m += "to be greater than at previous time (" + std::to_string(a_0) + ")";
+            throw std::runtime_error(m);
+        }
 
         unsigned reaction_idx = 0;
         double lower_bound = 0;
@@ -148,7 +168,8 @@ public:
                 lower_bound += propensity;
             }
         }
-        if (reaction_idx < m_reactions.size()){
+
+        if (reaction_idx < m_reactions.size()) {
             return m_reactions[reaction_idx];
         }
         else if ((reaction_idx >= m_reactions.size()) and (m_extrande_reaction.size() == 1)) {
