@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project name
-project(StoSpa LANGUAGES CXX VERSION 2.0.0)
+project(StoSpa LANGUAGES CXX VERSION 2.0.13)
+
+# Generate the header file with version numbers
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
+message("-- Project version: ${PROJECT_VERSION}")
 
 # If build type is not specified then Release is used
 if (NOT CMAKE_BUILD_TYPE)

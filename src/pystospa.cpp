@@ -8,6 +8,7 @@
 #include "reaction.hpp"
 #include "simulator.hpp"
 #include "voxel.hpp"
+#include "version.hpp"
 
 namespace py = pybind11;
 namespace ss = StoSpa2;
@@ -19,6 +20,7 @@ typedef std::function<double (const double&)> g_f;
 
 PYBIND11_MODULE(pystospa, m) {
     m.doc() = "pybind11 stospa2 plugin"; // optional module docstring
+    m.attr("__version__") = PROJECT_VERSION;
     py::class_<ss::Reaction>(m, "Reaction")
         .def(py::init<double, p_f, std::vector<int>>())
         .def(py::init<double, p_f, std::vector<int>, int>())
