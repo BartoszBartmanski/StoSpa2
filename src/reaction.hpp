@@ -39,6 +39,12 @@ bool operator != (const std::vector<T>& v1, const std::vector<T>& v2) {
     return !(v1 == v2);
 }
 
+/**
+ * Type alias \c p_f for function signature:
+ * \code std::function<double (const std::vector<unsigned>&, const double&)> \endcode
+ */
+typedef std::function<double (const std::vector<unsigned>&, const double&)> p_f;
+
 namespace StoSpa2 {
 
 /**
@@ -55,7 +61,7 @@ protected:
     double m_rate;
 
     /** Lambda function that returns propensity given the numebr of molecules and the area of a voxell */
-    std::function<double (const std::vector<unsigned>&, const double&)> m_propensity;
+    p_f m_propensity;
 
 public:
     /** The stoichiometry vector i.e. how the number of molecules changes if this reaction happens */
@@ -67,13 +73,11 @@ public:
     /**
      * Constructor for Reaction class
      * @param rate the rate of the reaction
-     * propensity lambda function that returns propensity given number of molecules and voxel area
-     * stoichiometry_vec stoichiometry vector
-     * diffusion_index index of the voxel in a vector of voxels where a molecule would jump
+     * @param propensity lambda function that returns propensity given number of molecules and voxel area
+     * @param stoichiometry_vec stoichiometry vector
+     * @param diffusion_index index of the voxel in a vector of voxels where a molecule would jump
      */
-    Reaction(double rate,
-        std::function<double (const std::vector<unsigned>&, const double&)> propensity,
-        std::vector<int> stoichiometry_vec, int diffusion_index=-1) :
+    Reaction(double rate, p_f propensity, std::vector<int> stoichiometry_vec, int diffusion_index=-1) :
         stoichiometry(std::move(stoichiometry_vec)),
         diffusion_idx(diffusion_index) {
 
