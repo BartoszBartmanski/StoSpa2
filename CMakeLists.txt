@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project name
-project(StoSpa LANGUAGES CXX VERSION 2.0.13)
+project(StoSpa2 LANGUAGES CXX VERSION 2.0.13)
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
 message("-- Project version: ${PROJECT_VERSION}")
+
+# We set the module path
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 # If build type is not specified then Release is used
 if (NOT CMAKE_BUILD_TYPE)
@@ -30,6 +33,8 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(src)
 add_subdirectory(benchmarks)
 add_subdirectory(tests)
+
+add_subdirectory(docs)
 
 # Add pybind11 and compile a python module
 add_subdirectory(pybind11)

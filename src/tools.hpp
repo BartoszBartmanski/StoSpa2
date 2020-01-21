@@ -27,10 +27,7 @@ void add_reaction(std::vector<StoSpa2::Voxel>& voxels, const StoSpa2::Reaction& 
  * @param propensity the propensity function used to create a Reaction instance
  * @param stoichiometry_vec the stoichiomery vector used to create a Reaction instance
  */
-void add_diffusion(std::vector<StoSpa2::Voxel>& voxels,
-                   const std::vector<std::vector<double>>& jump_rates,
-                   const std::function<double (const std::vector<unsigned>&, const double&)>& propensity,
-                   const std::vector<int>& stoichiometry_vec) {
+void add_diffusion(std::vector<StoSpa2::Voxel>& voxels, const std::vector<std::vector<double>>& jump_rates, p_f& propensity, const std::vector<int>& stoichiometry_vec) {
     for (unsigned i=0; i<voxels.size(); i++) {
         for (unsigned j=0; j<jump_rates[i].size(); j++) {
             if (i!=j) {
