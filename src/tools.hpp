@@ -9,16 +9,25 @@
 
 namespace StoSpa2 {
 
+/**
+ * Function that adds a given instance of the Reaction class to all the voxels in the vector of voxels
+ * @param voxels vector of Voxel class instances
+ * @param r reaction to be added to all the voxels in the given vector
+ */
 void add_reaction(std::vector<StoSpa2::Voxel>& voxels, const StoSpa2::Reaction& r) {
     for (auto& v : voxels) {
         v.add_reaction(r);
     }
 }
 
-void add_diffusion(std::vector<StoSpa2::Voxel>& voxels,
-                   const std::vector<std::vector<double>>& jump_rates,
-                   const std::function<double (const std::vector<unsigned>&, const double&)>& propensity,
-                   const std::vector<int>& stoichiometry_vec) {
+/**
+ * Function to add diffusion to all the given voxels based on the matrix of jump rates
+ * @param voxels vector of Voxel class instances
+ * @param jump_rates matrix (vector of vectors) of jump rates between different voxels
+ * @param propensity the propensity function used to create a Reaction instance
+ * @param stoichiometry_vec the stoichiomery vector used to create a Reaction instance
+ */
+void add_diffusion(std::vector<StoSpa2::Voxel>& voxels, const std::vector<std::vector<double>>& jump_rates, p_f& propensity, const std::vector<int>& stoichiometry_vec) {
     for (unsigned i=0; i<voxels.size(); i++) {
         for (unsigned j=0; j<jump_rates[i].size(); j++) {
             if (i!=j) {
@@ -28,6 +37,12 @@ void add_diffusion(std::vector<StoSpa2::Voxel>& voxels,
     }
 }
 
+/**
+ * Helper function to split a string of characters based on a separator into a vector of doubles
+ * @param input_str string to be split into vector of doubles
+ * @param separator the character used to split the string into vector of doubles
+ * @return resulting vector of doubles
+ */
 std::vector<double> split(const std::string& input_str, char separator)
 {
     std::istringstream ss(input_str);
@@ -42,6 +57,13 @@ std::vector<double> split(const std::string& input_str, char separator)
     return output;
 }
 
+/**
+ * Helper function to read in a matrix from a file. Useful for reading the matrix of jump rates in
+ * simulations of diffusion.
+ * @param filename path to the file
+ * @param separator character used to separate the strings into vectors of doubles
+ * @return a matrix (vector of vectors) contained within the file
+ */
 std::vector<std::vector<double>> read_matrix(const std::string& filename, char separator=' ') {
 
     std::vector<std::vector<double>> output;
