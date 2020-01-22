@@ -23,11 +23,11 @@ endif()
 # Find Sphinx package
 find_package(Sphinx)
 
-if(SPHINX_FOUND AND DOXYGEN_FOUND)
-    set(sphinx_conf_in "${CMAKE_CURRENT_SOURCE_DIR}/conf.py.in")
-    set(sphinx_conf "${CMAKE_CURRENT_SOURCE_DIR}/src/conf.py")
-    configure_file(${sphinx_conf_in} ${sphinx_conf} @ONLY)
+set(sphinx_conf_in "${CMAKE_CURRENT_SOURCE_DIR}/conf.py.in")
+set(sphinx_conf "${CMAKE_CURRENT_SOURCE_DIR}/src/conf.py")
+configure_file(${sphinx_conf_in} ${sphinx_conf} @ONLY)
 
+if(SPHINX_FOUND AND DOXYGEN_FOUND)
     add_custom_target(docs-sphinx
         COMMAND ${SPHINX_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/src/ ${CMAKE_CURRENT_BINARY_DIR}/sphinx
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
