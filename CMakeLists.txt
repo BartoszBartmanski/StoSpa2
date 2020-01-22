@@ -37,8 +37,12 @@ add_subdirectory(tests)
 add_subdirectory(docs)
 
 # Add pybind11 and compile a python module
-add_subdirectory(pybind11)
-pybind11_add_module(pystospa src/pystospa.cpp)
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
+	add_subdirectory(pybind11)
+	pybind11_add_module(pystospa src/pystospa.cpp)
+else()
+	message("-- Could NOT find pybind11")
+endif()
 
 # Add an executable for the example
 add_executable(example src/example.cpp)
