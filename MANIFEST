@@ -1,12 +1,6 @@
-.gitignore
-.gitmodules
-.readthedocs.yml
-.sim.gif
-.travis.yml
 CMakeLists.txt
 LICENCE
 MANIFEST
-MANIFEST.in
 README.md
 benchmarks/CMakeLists.txt
 benchmarks/benchmark_cme.cpp
@@ -222,7 +216,6 @@ pybind11/tools/pybind11Config.cmake.in
 pybind11/tools/pybind11Tools.cmake
 setup.cfg
 setup.py
-setup_stospa.sh
 src/example.cpp
 src/pystospa.cpp
 src/reaction.hpp
@@ -230,6 +223,10 @@ src/simulator.hpp
 src/tools.hpp
 src/version.hpp.in
 src/voxel.hpp
+pystospa/src/pystospa.cpp
+pystospa/src/voxel.cpp
+pystospa/src/reaction.cpp
+pystospa/src/simulator.cpp
 tests/CMakeLists.txt
 tests/catch.hpp
 tests/test_reaction.hpp

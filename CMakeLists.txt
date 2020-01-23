@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project name
-project(StoSpa2 LANGUAGES CXX VERSION 2.0.13)
+project(StoSpa2 LANGUAGES CXX VERSION 2.0.16)
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/pystospa/src/version.hpp @ONLY)
 message("-- Project version: ${PROJECT_VERSION}")
 
 # We set the module path
@@ -39,8 +40,7 @@ add_subdirectory(docs)
 # Add pybind11 and compile a python module
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
 	add_subdirectory(pybind11)
-	pybind11_add_module(pystospa src/pystospa.cpp)
-	install(TARGETS pystospa DESTINATION ${CMAKE_INSTALL_PREFIX})
+	add_subdirectory(pystospa)
 else()
 	message("-- Could NOT find pybind11")
 endif()
