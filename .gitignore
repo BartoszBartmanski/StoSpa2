@@ -12,6 +12,7 @@ test.ipynb
 
 # Build directory
 build/
+_skbuild/
 
 # Other files
 *.dat

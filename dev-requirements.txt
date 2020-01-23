@@ -1,0 +1,4 @@
+# Required for building
+scikit-build >= 0.10.0
+setuptools
+wheel

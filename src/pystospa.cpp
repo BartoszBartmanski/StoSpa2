@@ -14,14 +14,6 @@ namespace py = pybind11;
 namespace ss = StoSpa2;
 
 PYBIND11_MODULE(pystospa, m) {
-    m.doc() = R"pbdoc(
-        Python API
-        ----------
-           pystospa.Reaction
-           pystospa.Voxel
-           pystospa.Simulator
-
-    )pbdoc";
     m.attr("__version__") = PROJECT_VERSION;
     py::class_<ss::Reaction>(m, "Reaction", R"pbdoc(
         pystospa.Reaction(rate, propensity_func, stoichimetry, diff_idx=-1)
@@ -189,7 +181,7 @@ PYBIND11_MODULE(pystospa, m) {
        R"pbdoc(
            Makes a single step in the stochastic simulation algorithm
        )pbdoc")
-       .def("advance", &ss::Simulator::advance,
+       .def("advance", &ss::Simulator::advance, py::arg("time_point"),
        R"pbdoc(
            Advances the simulation to the specified time point
        )pbdoc")
