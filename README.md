@@ -1,12 +1,25 @@
-# StoSpa2 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
+# StoSpa2
+
+[![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
+[![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
+
+---
 
 A C++ software package for stochastic simulations of spatially extended systems. Code-base has been completely refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python bindings have also been included.
 
 ## Requirements
 
-* cmake
-* pybind11
-* Python >= 3.6
+Necessary:
+* C++ compiler (GCC, clang)
+* Cmake (>= 3.5)
+* Make (or ninja)
+
+Optional:
+* Pybind11 - to build pystospa (python binding of StoSpa2)
+* Python (>=3.5)
+* Boost - if boost branch of StoSpa2 is used
+* Doxygen - to build C++ documentation
+* Sphinx - to build python documentation
 
 ## Installation
 
