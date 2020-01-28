@@ -68,39 +68,11 @@ the `master` branch.
 Pystospa
 ========
 
-If Pybind11 is present in StoSpa2 root directory, it is possible to compile a python binding of StoSpa2.
-Instead of downloading Pybind11 separately, we can add `--recursive` when cloning StoSpa2 repository from
-github, like so
+Installing the python binding of StoSpa2, pystospa, we only need to type in the following command
 
     .. code-block:: bash
 
-        git clone https://github.com/BartoszBartmanski/StoSpa2.git --recursive
-
-which downloads the pybind11 as a submodule of this repository. If build directory is not present, we
-make the build directory and go there
-
-    .. code-block:: bash
-
-        mkdir build
-        cd build
-
-Next, we can compile pystospa (assuming that python is in your `PATH` environment variable)
-
-    .. code-block:: bash
-
-        cmake ../
-        make pystospa
-
-After which we can `import pystospa` in a python script.
-
-If python is not in your `PATH` environment, we can use cmake with the following flag
-(https://pybind11.readthedocs.io/en/stable/faq.html#cmake-doesn-t-detect-the-right-python-version)
-
-    .. code-block:: bash
-
-        cmake -DPYTHON_EXECUTABLE:FILEPATH=<path-to-python-executable> ../
-
-or simply compile within a conda environment of choice.
+        pip install pystospa
 
 Documentation
 =============
