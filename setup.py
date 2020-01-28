@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='pystospa',
+    name='pystospa_boost',
     version='2.0.17',
     author='Bartosz Bartmanski',
     author_email='bartoszbartmanski@gmail.com',

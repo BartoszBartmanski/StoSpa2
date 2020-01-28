@@ -11,9 +11,16 @@
 #include <string>
 #include <vector>
 
+// boost
+#include <boost/heap/fibonacci_heap.hpp>
+
 // other header files
 #include "reaction.hpp"
 #include "voxel.hpp"
+
+typedef std::pair<double, unsigned> d_u;
+
+typedef boost::heap::fibonacci_heap<d_u, boost::heap::compare<std::greater<d_u>>> fib_heap;
 
 namespace StoSpa2 {
 
@@ -30,11 +37,11 @@ protected:
     /** Current time in a simulation */
     double m_time;
 
-    /** Map of times until next reaction for each voxel to the corresponding indices of voxels */
-    std::map<double, unsigned> next_reaction_times;
+    /** Fibonacci heap container for times until next reaction and the index for each voxel  */
+    fib_heap next_reaction_times;
 
-    /** Vector of times until the next reaction for each voxel ordered according to voxel indices */
-    std::vector<double> lookup_times;
+    /** Vector of handle_type to the fiboanacci heap elements */
+    std::vector<fib_heap::handle_type> handles;
 
     /** Vector of Voxel class instances */
     std::vector<StoSpa2::Voxel> m_voxels;
@@ -64,14 +71,13 @@ protected:
         // Reset the priority queue if not empty
         if (!next_reaction_times.empty()) {
             next_reaction_times.clear();
-            lookup_times.clear();
+            handles.clear();
         }
 
         // Populate nex reaction times
         for (unsigned i=0; i<m_voxels.size(); i++) {
             double new_time = exponential(m_voxels[i].get_total_propensity());
-            next_reaction_times.emplace(std::make_pair(new_time, i));
-            lookup_times.emplace_back(new_time);
+            handles.emplace_back(next_reaction_times.emplace(std::make_pair(new_time, i)));
         }
     }
 
@@ -84,11 +90,8 @@ protected:
         double new_time = m_time + exponential(m_voxels[index].get_total_propensity());
 
         // Update next_reaction_times
-        next_reaction_times.erase(lookup_times[index]);
-        next_reaction_times.emplace(std::make_pair(new_time, index));
-
-        // Update lookup_times
-        lookup_times[index] = new_time;
+        *handles[index] = std::make_pair(new_time, index);
+        next_reaction_times.update(handles[index]);
     }
 
 public:
@@ -160,8 +163,8 @@ public:
     void step() {
 
         // Pick the smallest time from next_reaction_times
-        m_time = (*next_reaction_times.begin()).first;
-        auto voxel_idx = (*next_reaction_times.begin()).second;
+        m_time = next_reaction_times.top().first;
+        auto voxel_idx = next_reaction_times.top().second;
 
         m_voxels[voxel_idx].update_properties(m_time);
 
