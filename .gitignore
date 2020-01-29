@@ -18,4 +18,4 @@ _skbuild/
 *.dat
 notes.md
 src/version.hpp
-pystospa/src/version.hpp
+pystospaboost/src/version.hpp
