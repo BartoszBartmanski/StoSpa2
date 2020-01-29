@@ -1,12 +1,12 @@
 
 from skbuild import setup
 
-with open("README.md", "r") as fh:
+with open("pystospa/README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
     name='pystospa',
-    version='2.0.17',
+    version='2.0.18',
     author='Bartosz Bartmanski',
     author_email='bartoszbartmanski@gmail.com',
     description='A python binding of C++ package for stochastic simulations of spatially extended systems',
