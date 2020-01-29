@@ -1,7 +1,7 @@
 
 from skbuild import setup
 
-with open("README.md", "r") as fh:
+with open("pystospaboost/README.md", "r") as fh:
     long_description = fh.read()
 
 setup(

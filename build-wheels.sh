@@ -2,7 +2,7 @@
 set -e -x
 
 # Install a system package required by our library
-yum install -y atlas-devel cmake3
+yum install -y atlas-devel cmake3 boost-devel
 mkdir ~/bin
 export PATH=~/bin:$PATH
 ln -s /usr/bin/cmake3 ~/bin/cmake
