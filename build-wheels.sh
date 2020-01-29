@@ -20,5 +20,5 @@ done
 
 # Install packages and test
 for PYBIN in /opt/python/*/bin/; do
-    "${PYBIN}/pip" install pystospa --no-index -f /io/wheelhouse
+    "${PYBIN}/pip" install pystospaboost --no-index -f /io/wheelhouse
 done

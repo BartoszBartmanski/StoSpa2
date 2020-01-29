@@ -5,7 +5,7 @@ project(StoSpa2 LANGUAGES CXX VERSION 2.0.17)
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/pystospa/src/version.hpp @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/pystospaboost/src/version.hpp @ONLY)
 message("-- Project version: ${PROJECT_VERSION}")
 
 # We set the module path
@@ -48,7 +48,7 @@ add_subdirectory(docs)
 # Add pybind11 and compile a python module
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
 	add_subdirectory(pybind11)
-	add_subdirectory(pystospa)
+	add_subdirectory(pystospaboost)
 else()
 	message("-- Could NOT find pybind11")
 endif()

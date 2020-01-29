@@ -13,10 +13,10 @@
 namespace py = pybind11;
 namespace ss = StoSpa2;
 
-PYBIND11_MODULE(pystospa, m) {
+PYBIND11_MODULE(pystospaboost, m) {
     m.attr("__version__") = PROJECT_VERSION;
     py::class_<ss::Reaction>(m, "Reaction", R"pbdoc(
-        pystospa.Reaction(rate, propensity_func, stoichimetry, diff_idx=-1)
+        pystospaboost.Reaction(rate, propensity_func, stoichimetry, diff_idx=-1)
 
         Reaction class constructor
 
@@ -58,7 +58,7 @@ PYBIND11_MODULE(pystospa, m) {
         )pbdoc");
 
     py::class_<ss::Voxel>(m, "Voxel", R"pbdoc(
-        pystospa.Voxel(num_molecules, voxel_size, growth_func=None, extrande_ratio=2.0)
+        pystospaboost.Voxel(num_molecules, voxel_size, growth_func=None, extrande_ratio=2.0)
 
         Voxel class constructor
 
@@ -128,7 +128,7 @@ PYBIND11_MODULE(pystospa, m) {
         )pbdoc");
 
    py::class_<ss::Simulator>(m, "Simulator", R"pbdoc(
-       pystospa.Simulator(voxels)
+       pystospaboost.Simulator(voxels)
 
        Simulator class constructor
 

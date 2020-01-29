@@ -3,13 +3,13 @@
 include_directories(src)
 
 # Use pybind11 to create pystospa
-pybind11_add_module(pystospa_boost src/pystospa.cpp)
+pybind11_add_module(pystospaboost src/pystospa.cpp)
 
 # Generate __init__.py
 file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/__init__.py INPUT ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.in)
 
 # Install the binary image
-install(TARGETS pystospa_boost LIBRARY DESTINATION pystospa_boost)
+install(TARGETS pystospaboost LIBRARY DESTINATION pystospaboost)
 
 # Install __init__.py file
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.py DESTINATION pystospa_boost)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/__init__.py DESTINATION pystospaboost)
