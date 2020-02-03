@@ -1,4 +1,4 @@
-# StoSpa2
+# pystospa
 
 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
 [![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
@@ -31,7 +31,6 @@ This way of installing pystospa assumes the following requirements are met
 * setuptools
 * wheel
 * cmake
-* (optional) boost - if boost branch of StoSpa2 is used
 
 ## Example
 
