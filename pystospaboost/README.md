@@ -1,4 +1,4 @@
-# StoSpa2
+# pystospaboost
 
 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
 [![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
@@ -12,7 +12,7 @@ A Python binding of a C++ software package for stochastic simulations of spatial
 
 ### Easy way
 ```
-pip install pystospa
+pip install pystospaboost
 ```
 
 ### Hard way
@@ -31,7 +31,7 @@ This way of installing pystospa assumes the following requirements are met
 * setuptools
 * wheel
 * cmake
-* (optional) boost - if boost branch of StoSpa2 is used
+* boost
 
 ## Example
 
