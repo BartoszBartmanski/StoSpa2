@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 # Project name
-project(StoSpa2 LANGUAGES CXX VERSION 2.0.18)
+project(StoSpa2 LANGUAGES CXX VERSION 2.0.19)
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
@@ -38,7 +38,7 @@ add_subdirectory(tests)
 add_subdirectory(docs)
 
 # Add pybind11 and compile a python module
-if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11")
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11/CMakeLists.txt")
 	add_subdirectory(pybind11)
 	add_subdirectory(pystospa)
 else()
