@@ -6,7 +6,7 @@ with open("pystospaboost/README.md", "r") as fh:
 
 setup(
     name='pystospaboost',
-    version='2.0.18',
+    version='2.0.19',
     author='Bartosz Bartmanski',
     author_email='bartoszbartmanski@gmail.com',
     description='A python binding of C++ package for stochastic simulations of spatially extended systems',
