@@ -5,7 +5,7 @@ Installation
 There are two ways of using StoSpa2: with Python or with C++.
 
 Python installation
--------------------
+===================
 
 If we wish to use Python-binding of StoSpa2, then the installation is just a single command
 
@@ -14,7 +14,7 @@ If we wish to use Python-binding of StoSpa2, then the installation is just a sin
         pip install pystospa
 
 C++ installation
-----------------
+================
 
 The installation steps are as follows:
 
