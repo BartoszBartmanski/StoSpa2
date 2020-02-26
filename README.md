@@ -31,6 +31,7 @@ compile the package with
 ```
 cd StoSpa2
 mkdir build
+cd build
 cmake ../
 make all
 ```
