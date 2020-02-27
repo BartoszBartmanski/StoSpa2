@@ -35,7 +35,6 @@ This way of installing pystospa assumes the following packages are installed are
 * setuptools
 * wheel
 * cmake
-If we wish to use Python-binding of StoSpa2, then the installation is just a single command
 
 
 C++ installation

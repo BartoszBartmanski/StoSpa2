@@ -21,6 +21,33 @@ Optional:
 
 ## Installation
 
+There are two ways of using StoSpa2: with Python or with C++.
+
+### Python
+
+#### Easy way
+```
+pip install pystospa
+```
+
+#### Hard way
+After cloning the following repository
+```
+git clone https://github.com/BartoszBartmanski/StoSpa2.git --recursive
+```
+do the following
+```
+cd StoSpa2
+python setup.py install
+```
+This way of installing pystospa assumes the following packages are installed are met
+* scikit-build
+* setuptools
+* wheel
+* cmake
+
+### C++
+
 The installation steps are as follows:
 
 1. We clone the repository
