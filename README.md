@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
 [![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
 
----
-
 A C++ software package for stochastic simulations of spatially extended systems. Code-base has been completely refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python bindings have also been included.
 
 ## Requirements
@@ -23,15 +21,27 @@ Optional:
 
 ## Installation
 
-After cloning this repository using
+The installation steps are as follows:
+
+1. We clone the repository
 ```
 git clone https://github.com/BartoszBartmanski/StoSpa2.git --recursive
 ```
-compile the package with
+Note the `recursive` flag at the end of the command, which is needed to compile python-binding of
+StoSpa2.
+
+2. We go to the StoSpa2 root directory and make a build directory
 ```
 cd StoSpa2
 mkdir build
 cd build
+<<<<<<< HEAD
+=======
+```
+
+3. We compile
+```
+>>>>>>> master
 cmake ../
 make all
 ```

@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
 [![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
 
----
-
 A Python binding of a C++ software package for stochastic simulations of spatially extended systems, [StoSpa2](https://github.com/BartoszBartmanski/StoSpa2). Code-base has been completely refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python bindings have also been included.
 
 
@@ -26,7 +24,7 @@ cd StoSpa2
 python setup.py install
 ```
 
-This way of installing pystospa assumes the following requirements are met
+This way of installing pystospa assumes the following packages are installed are met
 * scikit-build
 * setuptools
 * wheel
