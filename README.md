@@ -73,6 +73,12 @@ cmake ../
 make all
 ```
 
+After the above command we can run the example executable (contained in your current working directory, `<project_dir>/build`), by executing the following command
+```
+./example
+```
+which generates an `example.dat` file.
+
 ## Example
 
 Included in the `src` directory is a cpp file `example.cpp` where we run a simple simulation of diffusion on a one-dimensional domain [0, 10] discretised into 10 voxels.

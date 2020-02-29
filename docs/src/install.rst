@@ -66,6 +66,14 @@ The installation steps are as follows:
         cmake ../
         make all
 
+After the above command we can run the example executable (contained in your current working directory, `<project_dir>/build`), by executing the following command
+
+    .. code-block:: bash
+
+        ./example
+
+which generates an `example.dat` file.
+
 This is the basic installation. There are more options, such as installation that uses the Boost library,
 covered in Branches section below.
 
