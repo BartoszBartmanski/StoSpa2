@@ -27,13 +27,13 @@ There are two ways of using StoSpa2: with Python or with C++.
 
 #### Easy way
 ```
-pip install pystospa
+pip install pystospaboost
 ```
 
 #### Hard way
 After cloning the following repository
 ```
-git clone https://github.com/BartoszBartmanski/StoSpa2.git --recursive
+git clone https://github.com/BartoszBartmanski/StoSpa2.git --recursive --branch boost
 ```
 do the following
 ```
@@ -62,13 +62,10 @@ StoSpa2.
 cd StoSpa2
 mkdir build
 cd build
-<<<<<<< HEAD
-=======
 ```
 
 3. We compile
 ```
->>>>>>> master
 cmake ../
 make all
 ```
