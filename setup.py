@@ -1,12 +1,13 @@
 
+from os import path
 from skbuild import setup
 
-with open("pystospa/README.md", "r") as fh:
+with open(path.join("pystospa", "README.md"), "r") as fh:
     long_description = fh.read()
 
 setup(
     name='pystospa',
-    version='2.0.19',
+    version='2.0.21',
     author='Bartosz Bartmanski',
     author_email='bartoszbartmanski@gmail.com',
     description='A python binding of C++ package for stochastic simulations of spatially extended systems',

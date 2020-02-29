@@ -223,6 +223,9 @@ src/simulator.hpp
 src/tools.hpp
 src/version.hpp.in
 src/voxel.hpp
+pystospa/__init__.py.in
+pystospa/CMakeLists.txt
+pystospa/README.md
 pystospa/src/pystospa.cpp
 pystospa/src/voxel.cpp
 pystospa/src/reaction.cpp
