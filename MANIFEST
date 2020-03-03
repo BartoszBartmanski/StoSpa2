@@ -2,6 +2,7 @@ CMakeLists.txt
 LICENCE
 MANIFEST
 README.md
+version
 benchmarks/CMakeLists.txt
 benchmarks/benchmark_cme.cpp
 benchmarks/benchmark_diffusion.cpp
