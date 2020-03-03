@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
+# Read in the version number
+file(STRINGS "version" stospa2_version)
+
 # Project name
-project(StoSpa2 LANGUAGES CXX VERSION 2.0.21)
+project(StoSpa2 LANGUAGES CXX VERSION "${stospa2_version}")
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
