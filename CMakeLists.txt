@@ -30,6 +30,10 @@ endif(CMAKE_BUILD_TYPE STREQUAL "Release")
 message("-- CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 message("-- CMAKE_CXX_FLAGS:${CMAKE_CXX_FLAGS}")
 
+if(APPLE)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++i -mmacosx-version-min=10.9")
+endif(APPLE)
+
 # Projects need c++14 standard - for make_unique and make_shared
 set(CMAKE_CXX_STANDARD 14)
 
