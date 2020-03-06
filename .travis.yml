@@ -3,12 +3,10 @@ language: cpp
 
 matrix:
   allow_failures:
-    # These xcode versions have a llvm defect
     - os: osx
-      osx_image: xcode9
 
   include:
-    # Different versions of gcc on Linux
+    # Linux, GCC
     - os: linux
       addons:
         apt:
@@ -49,6 +47,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
+    # Linux, clang
     - os: linux
       addons:
         apt:
@@ -112,9 +111,21 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
 
-    # Different versions of gcc on OSX
+    # OSX
     - os: osx
       osx_image: xcode9
+
+    - os: osx
+      osx_image: xcode9.1
+
+    - os: osx
+      osx_image: xcode9.2
+
+    - os: osx
+      osx_image: xcode9.3
+
+    - os: osx
+      osx_image: xcode9.4
 
     - os: osx
       osx_image: xcode10
@@ -125,18 +136,34 @@ matrix:
     - os: osx
       osx_image: xcode10.2
 
+    - os: osx
+      osx_image: xcode10.3
+
+    - os: osx
+      osx_image: xcode11
+
+    - os: osx
+      osx_image: xcode11.1
+
+    - os: osx
+      osx_image: xcode11.1
+
+    - os: osx
+      osx_image: xcode11.2
+
+
 before_install:
     - eval "${MATRIX_EVAL}"
 
 # install dependencies
 install:
     - git submodule update --init --recursive
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then 
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
         brew update;
         brew install cmake ninja;
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
       fi
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then 
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then
         sudo apt-get update;
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
       fi
