@@ -1,14 +1,20 @@
 
-from os import path
+import os
 from skbuild import setup
 
 
-with open(path.join("pystospaboost", "README.md"), "r") as fh:
+# Read in the version number
+with open("version", "r") as fh:
+    version = fh.read().strip()
+
+# Read in the description
+with open(os.path.join("pystospaboost", "README.md"), "r") as fh:
     long_description = fh.read()
 
+# Run the installation
 setup(
     name='pystospaboost',
-    version='2.0.21',
+    version=version,
     author='Bartosz Bartmanski',
     author_email='bartoszbartmanski@gmail.com',
     description='A python binding of C++ package for stochastic simulations of spatially extended systems',

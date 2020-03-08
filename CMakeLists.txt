@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
+# Read in the version number
+file(STRINGS "version" stospa2_version)
+
 # Project name
-project(StoSpa2 LANGUAGES CXX VERSION 2.0.21)
+project(StoSpa2 LANGUAGES CXX VERSION "${stospa2_version}")
 
 # Generate the header file with version numbers
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/src/version.hpp @ONLY)
@@ -20,7 +23,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -Wpedantic")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -Wpedantic -Wno-tautological-compare")
 else(CMAKE_BUILD_TYPE STREQUAL "Release")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif(CMAKE_BUILD_TYPE STREQUAL "Release")
