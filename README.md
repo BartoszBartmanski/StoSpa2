@@ -113,6 +113,18 @@ sim.run("example.dat", 0.01, 1000);
 }
 ```
 
-The resulting simulation output:
+The data from a simulation is saved in a space separated values format, with first value being the time, followed by number of molecules in each voxel. Hence, a single line in the data file looks like so
+```
+t v1.1 v1.2 ... v2.1 v2.2 ... vN.1 vN.2 ...
+```
+where `t` represents a particular time point and `vI.J` represents number of molecules of species `J` in voxel `I`.
+
+For example, for three voxels, with a single species of molecules the output will look like so
+```
+0.0 100 0 0
+1.0 24 16 10
+```
+
+The resulting simulation output (code to generate this figure is in docs/animation.py):
 
 ![Simulation output](.sim.gif)
