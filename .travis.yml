@@ -161,15 +161,15 @@ before_install:
 
 # install dependencies
 install:
-    - sudo apt-get install -y libboost-all-dev
     - git submodule update --init --recursive
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
         brew update;
-        brew install cmake ninja;
+        brew install cmake ninja boost;
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
       fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then
         sudo apt-get update;
+        sudo apt-get install -y libboost-all-dev;
         wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
       fi
     - bash miniconda.sh -b -p $HOME/miniconda
