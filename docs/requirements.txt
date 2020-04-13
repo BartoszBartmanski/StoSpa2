@@ -5,5 +5,9 @@ setuptools
 wheel
 
 # For building documentation
+numpy
+matplotlib
+jupyter
 sphinx>=2.0
+nbsphinx
 breathe>=4.13.0
