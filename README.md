@@ -72,45 +72,85 @@ cmake ../
 make all
 ```
 
-After the above command we can run the example executable (contained in your current working directory, `<project_dir>/build`), by executing the following command
+After the above command we can run one of the examples executable (contained in your current working directory, `<project_dir>/build`), by executing the following command
 ```
-./example
+./examples/cme_example
 ```
-which generates an `example.dat` file.
+which generates an `cme_example.dat` file.
 
 ## Example
 
-Included in the `src` directory is a cpp file `example.cpp` where we run a simple simulation of diffusion on a one-dimensional domain [0, 10] discretised into 10 voxels.
+Let us consider the following chemical reaction
 
-First, we include the main header from StoSpa2 and we start the main function that will contain the code for the simulation.
-```
-#include "simulator.hpp"
+$$ A \xrightarrow{k} \emptyset $$
 
-using namespace StoSpa2;
+happening at some rate $k \, [s^{-1}]$. We can simulate this chemical system with the following code, which is within the examples directory
+```C++
+   #include "simulator.hpp"
 
-int main() {
+   int main() {
+       // Create voxel object. Arguments: vector of number of molecules, size of the voxel
+       std::vector<unsigned> initial_num = {100};  // number of molecules of species A
+       double domain_size = 10.0;  // size of the domain in cm
+       StoSpa2::Voxel v(initial_num, domain_size);
+
+       // Create reaction object.
+       // Arguments: reaction rate, propensity func, stoichiometry vector
+       double k = 1.0;
+       auto propensity = [](const std::vector<unsigned>& num_mols, const double& area) { return num_mols[0]; };
+       std::vector<int> stoch = {-1};
+       StoSpa2::Reaction r(k, propensity, {-1});
+
+       // Add a reaction to a voxel
+       v.add_reaction(r);
+
+       // Pass the voxel with the reaction(s) to the simulator object
+       StoSpa2::Simulator s({v});
+
+       // Run the simulation. Arguments: path to output file, time step, number of steps
+       s.run("cme_example.dat", 0.01, 500);
+   }
 ```
-Within the `main` function we first define a lambda function for the propensity function of a diffusion reaction.
+In the first segment of the code we define the domain of the system using a single `Voxel` object, by specifiying the input arguments of the `Voxel` object, then initialising the `Voxel` object as follows:
+```C++
+       std::vector<unsigned> initial_num = {100};  // number of molecules of species A
+       double domain_size = 10.0;  // size of the domain in cm
+       StoSpa2::Voxel v(initial_num, domain_size);
 ```
-auto diffusion = [](const std::vector<unsigned>& mols, const double& area) { return mols[0]; };
+Next, we create the reaction object by specifying the reaction rate ($k$), the propensity function and the stoichiometry vector for the decay reaction, which we then use to create a `Reaction` object in the segment below:
+```C++
+       double k = 1.0;
+       auto propensity = [](const std::vector<unsigned>& num_mols, const double& area) { return num_mols[0]; };
+       std::vector<int> stoch = {-1};
+       StoSpa2::Reaction r(k, propensity, {-1});
 ```
-Then, we create an array of voxels, each of size 1, with 10000 molecules in the leftmost one, as shown below.
+After creating the `Reaction` object, we can pass it to the previously created `Voxel` object
+```C++
+        v.add_reaction(r);
 ```
-std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, 1.0));
-vs.insert(vs.begin(), Voxel({10000}, 1.0));
+Finally, we create the `Simulator` object, whose `run` function is used to run the simulation.
+```C++
+       StoSpa2::Simulator s({v});
+       s.run("cme_example.dat", 0.01, 500);
 ```
-We add diffusion reactions to all the voxels
-```
-for (unsigned i=0; i<vs.size()-1; i++) {
-    vs[i].add_reaction(Reaction(1.0, diffusion, {-1}, i+1));
-    vs[i+1].add_reaction(Reaction(1.0, diffusion, {-1}, i));
-}
-```
-and finally, we create a simulator instance and run the simulation.
-```
-Simulator sim(vs);
-sim.run("example.dat", 0.01, 1000);
-}
+
+We can plot the output of the simulation using the following python code
+```Python
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+   # Open the file containing the data
+   data = np.loadtxt("cme_example.dat")
+   time = data[:, 0]  # Time points
+   num_A = data[:, 1]  # Number of molecules of A
+
+   # Plot the data and label the axes
+   fig, ax = plt.subplots()
+   ax.step(time, num_A, label="A")
+   ax.set_xlabel("Time [s]")
+   ax.set_ylabel("Number of molecules")
+   ax.legend()
+   fig.savefig("cme_example.svg")
 ```
 
 The data from a simulation is saved in a space separated values format, with first value being the time, followed by number of molecules in each voxel. Hence, a single line in the data file looks like so
@@ -119,12 +159,21 @@ t v1.1 v1.2 ... v2.1 v2.2 ... vN.1 vN.2 ...
 ```
 where `t` represents a particular time point and `vI.J` represents number of molecules of species `J` in voxel `I`.
 
-For example, for three voxels, with a single species of molecules the output will look like so
+For example, the output from the above code would return the following:
+```
+0.0 100
+0.01 78
+.
+.
+.
+```
+while for three voxels, with a single species of molecules the output will look like so
 ```
 0.0 100 0 0
-1.0 24 16 10
+0.1 24 16 10
+.
+.
+.
 ```
 
-The resulting simulation output (code to generate this figure is in docs/animation.py):
-
-![Simulation output](.sim.gif)
+![cme_example](docs/src/images/cme_example.svg)
