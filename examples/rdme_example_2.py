@@ -19,7 +19,7 @@ propensity = lambda num_mols, length : num_mols[0]
 stoch = [-1]
 for i, vox in enumerate(domain):
     # Add diffusion jump to the right from voxel i to voxel i+1 (if one exists)
-    if i < len(domain): vox.add_reaction(ss.Reaction(d, propensity, stoch, i+1))
+    if i < len(domain)-1: vox.add_reaction(ss.Reaction(d, propensity, stoch, i+1))
     # Add diffusion jump to the left from voxel i+1 to voxel i (if one exists)
     if i > 0: vox.add_reaction(ss.Reaction(d, propensity, stoch, i-1))
     vox.add_reaction(ss.Reaction(k, propensity, stoch))

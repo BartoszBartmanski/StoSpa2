@@ -24,7 +24,7 @@ stoch_diff_B = [0, -1]
 stoch_other = [-2, 1]
 for i, vox in enumerate(domain):
     # Add diffusion jump to the right from voxel i to voxel i+1 (if one exists)
-    if i < len(domain):
+    if i < len(domain)-1:
         vox.add_reaction(ss.Reaction(d, prop_diff_A, stoch_diff_A, i+1))
         vox.add_reaction(ss.Reaction(d, prop_diff_B, stoch_diff_B, i+1))
     # Add diffusion jump to the left from voxel i+1 to voxel i (if one exists)
