@@ -33,8 +33,11 @@ do the following
 This way of installing pystospa assumes the following packages are installed are met
 
 * scikit-build
+
 * setuptools
+
 * wheel
+
 * cmake
 
 

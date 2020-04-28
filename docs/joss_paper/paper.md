@@ -50,88 +50,96 @@ As first example, let us consider the following chemical reaction
 $$
     A \xrightarrow{k} \emptyset \, ,
 $$
-which occurs at some rate $k \, s^{-1}$ on a domain $\Omega = [0, 1]$. We can simulate this chemical system with the following code
+which occurs at some rate $k \, s^{-1}$ on a domain $\Omega = [0 \,cm, 1 \,cm]$. We can simulate this chemical system with the following code
 ```C++
-    #include "simulator.hpp"
+#include "simulator.hpp"
 
-    int main() {
+int main() {
+    //// Create voxel object. ////
+    // number of molecules of species A
+    std::vector<unsigned> initial_num = {100};  
+    // size of the domain in cm
+    double domain_size = 10.0;
+    // Arguments: vector of number of molecules, size of the voxel
+    StoSpa2::Voxel v(initial_num, domain_size);
 
-        // We define the propensity function that takes in number of molecules
-        // and area of the voxel and gives back the propensity function
-        auto decay = [](
-            const std::vector<unsigned>& num_mols,
-            const double& area)
-        { return num_mols[0]; };
-
-        // We create a reaction object
-        // arguments: reaction rate, propensity function, stoichiometry vector
-        StoSpa2::Reaction r(1.0, decay, {-1});
-
-        // We create a voxel object
-        // arguments: vector of number of initial number of molecules, voxel size
-        StoSpa2::Voxel v({100}, 1.0);
-        // and pass the previously created reaction object to it
-        v.add_reaction(r);
-
-        // We create a simulator object
-        // arguments: vector of voxel objects
-        StoSpa2::Simulator sim({v});
-        // and use the run function
-        // arguments: name of output file, time step size, number of steps
-        sim.run("cme_example.dat", 0.01, 500);
-    }
-```
-The first line of code in the above example makes sure that we can use the `StoSpa2` classes. In the main function we first define the lambda function that returns the reaction propensity
-```C++
-    auto decay = [](
-        const std::vector<unsigned>& mols,
+    //// Create reaction object. ////
+    double k = 1.0;
+    auto propensity = [](
+        const std::vector<unsigned>& num_mols,
         const double& area)
-    { return mols[0]; };
-```
-Though, the reaction propensity function in this case would be $k a$ with $a$ being the number of molecules of A, whereas the above lambda function returns just the number of molecules. This interface was chosen as to not repeat a lambda function definition if similar reactions appear more than once, for example if the reaction happens in multiple voxels. The lambda functions for the reaction propensities have to take two arguments: a vector and a double. The vector
-represents the number of molecules and the double representing the area of a voxel. These two arguments will be passed within the Voxel class.
+        { return num_mols[0]; };
+    std::vector<int> stoch = {-1};
+    // Arguments: reaction rate, propensity func, stoichiometry vector
+    StoSpa2::Reaction r(k, propensity, stoch);
 
-Next, we create both voxel and reactions objects:
-```C++
-    StoSpa2::Reaction r(1.0, decay, {-1});
-    StoSpa2::Voxel v({100}, 1.0);
-```
-where we place $100$ molecules of species $A$ into a domain of size $1.0 \, cm$ (which in our case is a single
-voxel of size $1.0 \, cm$). Then we assign the reaction object a rate of $k = 1.0 \, s^{-1}$, the propensity function `r` as defined before and the stoichiometry vector which decreases the number of molecules by one any time that the decay reaction happens.
-
-We then add the reaction object we just created to the voxel object, and then run the simulation, which saves the output into `example.dat` file every `0.01` for `500` steps.
-```C++
+    // Add a reaction to a voxel
     v.add_reaction(r);
 
-    StoSpa2::Simulator sim({v});
-    sim.run("cme_example.dat", 0.01, 500);
+    // Pass the voxel with the reaction(s) to the simulator object
+    StoSpa2::Simulator s({v});
+
+    // Run the simulation.
+    // Arguments: path to output file, time step, number of steps
+    s.run("cme_example.dat", 0.01, 500);
+}
+```
+The first line of code in the above example makes sure that we can use the `StoSpa2` classes. In the main function we first define the `Voxel` object that will represent the domain of the system:
+```C++
+std::vector<unsigned> initial_num = {100};
+double domain_size = 10.0;
+StoSpa2::Voxel v(initial_num, domain_size);
+```
+where we place $100$ molecules of species $A$ into a domain of size $1.0 \, cm$ (which in our case is a single
+voxel of size $1.0 \, cm$).
+
+In the next segment of the code we create the lambda function that represents the propensity function and the `Reaction` object with a rate of $k = 1.0 \, s^{-1}$, the propensity function `propensity` and the stoichiometry vector which decreases the number of molecules by one any time that the decay reaction happens:
+```C++
+double k = 1.0;
+auto propensity = [](
+    const std::vector<unsigned>& num_mols,
+    const double& area)
+    { return num_mols[0]; };
+std::vector<int> stoch = {-1};
+StoSpa2::Reaction r(k, propensity, {-1});
+```
+Though, the reaction propensity function in this case would be $k a$ with $a$ being the number of molecules of A, whereas the above lambda function returns just the number of molecules. This interface was chosen as to not repeat a lambda function definition if similar reactions appear more than once, for example if the reaction happens in multiple voxels. The lambda functions for the reaction propensities have to take two arguments: a vector and a double. The vector
+represents the number of molecules and the double representing the area of a voxel. We then pass the `Reaction` object to the `Voxel`:
+```C++
+v.add_reaction(r);
+```
+Finally, we run the simulation, which saves the output into `example.dat` file every $0.01 \, s$ for $500$ steps.
+```C++
+StoSpa2::Simulator sim({v});
+sim.run("cme_example.dat", 0.01, 500);
 ```
 We can see example output of a simulation in \autoref{fig:cme_example}.
 
-The Python binding of `StoSpa2`, called `pystospa`, allows us to run the same simulation using the Python programming language. The Python code in this case is as follows
+The Python binding of `StoSpa2`, called `pystospa`, allows us to run the same simulation using the Python programming language. The Python code in this case is as follows:
 ```Python
-    import pystospa as ss
+import pystospa as ss
 
-    # We define the propensity function that takes in number of molecules
-    # and area of the voxel and gives back the propensity function
-    decay = lambda num_mols, area : num_mols[0]
+# Create voxel object.
+# Arguments: vector of number of molecules, size of the voxel
+initial_num = [100]  # number of molecules of species A
+domain_size = 10.0  # size of the domain in cm
+v = ss.Voxel(initial_num, domain_size)
 
-    # We create a reaction object
-    # arguments: reaction rate, propensity function, stoichiometry vector
-    r = ss.Reaction(1.0, decay, [-1])
+# Create reaction object.
+# Arguments: reaction rate, propensity func, stoichiometry vector
+k = 1.0
+propensity = lambda num_mols, area : num_mols[0]
+stoch = [-1]
+r = ss.Reaction(k, propensity, stoch)
 
-    # We create a voxel object
-    # arguments: vector of number of initial number of molecules, voxel size
-    v = ss.Voxel([100], 1.0)
-    # and pass the previously created reaction object to it
-    v.add_reaction(r)
+# Add a reaction to a voxel
+v.add_reaction(r)
 
-    # We create a simulator object
-    # arguments: vector of voxel objects
-    s = ss.Simulator([v])
-    # and use the run function
-    # arguments: name of output file, time step size, number of steps
-    s.run("cme_example.dat", 0.01, 500)
+# Pass the voxel with the reaction(s) to the simulator object
+s = ss.Simulator([v])
+# Run the simulation.
+# Arguments: path to output file, time step, number of steps
+s.run("cme_example.dat", 0.01, 500)
 ```
 which has a very similar interface as the C++ code, but has the benefit of not needing any compilation once `pystospa` is installed.
 
@@ -145,34 +153,42 @@ $$
 $$
 where $A_i$ is the the number of molecules of A in voxel $i$. The propensity functions for the above diffusion reactions have the following form $d a_{i}$ for a molecule of A to jump from voxel $i$ to either of the neighbouring ones. The C++ code for such a system is as follows:
 ```C++
-    #include "simulator.hpp"
+#include "simulator.hpp"
 
-    using namespace StoSpa2;
+using namespace StoSpa2;
 
-    int main() {
-        // We define the propensity function that takes in number of molecules
-        // and area of the voxel and gives back the propensity function
-        auto diffusion = [](
-            const std::vector<unsigned>& mols,
-            const double& area)
-        { return mols[0]; };
+int main() {
 
-        // We create an array of voxels with 10000 molecules in the leftmost one
-        std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, 1.0));
-        vs.insert(vs.begin(), Voxel({10000}, 1.0));
+    // Create a vector of voxel objects.
+    // Arguments: vector of number of molecules, size of the voxel
+    std::vector<unsigned> initial_num = {10000};
+    double voxel_size = 1.0;
+    // First create nine empty voxels
+    std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, voxel_size));
+    // Then add the non-empty voxel at the beginning
+    vs.insert(vs.begin(), Voxel(initial_num, voxel_size));
 
-        // We add diffusion reactions to all the voxels
-        for (unsigned i=0; i<vs.size()-1; i++) {
-            // Add a jump reaction from voxel i to voxel i+1
-            vs[i].add_reaction(Reaction(1.0, diffusion, {-1}, i+1));
-            // Add a jump reaction from voxel i+1 to voxel
-            vs[i+1].add_reaction(Reaction(1.0, diffusion, {-1}, i));
-        }
-
-        // We create a simulator instance and run the simulation.
-        Simulator sim(vs);
-        sim.run("rdme_example.dat", 0.01, 500);
+    double d = 1.0;  // diffusion rate
+    auto propensity = [](
+        const std::vector<unsigned>& num_mols,
+        const double& area)
+    { return num_mols[0]; };
+    std::vector<int> stoch = {-1};
+    // Create and add the reaction objects
+    for (unsigned i=0; i<vs.size()-1; i++) {
+        // Add diffusion jump to the right from voxel i to voxel i+1
+        vs[i].add_reaction(Reaction(d, propensity, stoch, i+1));
+        // Add diffusion jump to the left from voxel i+1 to voxel i
+        vs[i+1].add_reaction(Reaction(d, propensity, stoch, i));
     }
+
+    // Pass the voxels with the reaction(s) to the simulator object
+    Simulator s(vs);
+
+    // Run the simulation.
+    // Arguments: path to output file, time step, number of steps
+    s.run("rdme_example.dat", 0.01, 500);
+}
 ```
 which is included in the `examples` directory of StoSpa2.
 
@@ -180,32 +196,37 @@ The code is somewhat similar to the chemical master equation example, except we 
 We also include the extra line `using namespace StoSpa2` to save us having to write `StoSpa2::` in
 front of every `StoSpa2` class.
 
-The first line within the main function defines the propensity function for the diffusion of molecules as
-a jump process between two adjacent voxels (again with the jump rate factored out as it is given as separate parameter of the Reaction class constructor):
+We start by initialising the `Voxel` objects that make up the domain of the system. First, we set the variables that define the number of molecules in the left-most voxel and the size of every voxel. Then, we initialise a vector of nine `Voxel` objects that contain no molecules and we slot an additional `Voxel` object at the beginning of this vector with $10000$ molecules:
 ```C++
-    auto diffusion = [](
-        const std::vector<unsigned>& mols,
-        const double& area)
-        { return mols[0]; };
-```
-Then, we create a vector of `Voxel` objects, with one voxel containing $10000$ molecules:
-```C++
-    std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, 1.0));
-    vs.insert(vs.begin(), Voxel({10000}, 1.0));
+std::vector<unsigned> initial_num = {10000};
+double voxel_size = 1.0;
+// First create nine empty voxels
+std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, voxel_size));
+// Then add the non-empty voxel at the beginning
+vs.insert(vs.begin(), Voxel(initial_num, voxel_size));
 ```
 We add reactions to the voxels, where we assume that the voxels are ordered by their position on the
-$x$-axis. When adding the diffusion reactions, we have one additional parameter in the `Reaction` class constructors, namely `diffusion_idx`, which is the index of the neighbouring voxel in to which a molecule jumps if a diffusion reaction happens
+$x$-axis. When adding the diffusion reactions, we have one additional parameter in the `Reaction` class constructors, namely `diffusion_idx`, which is the index of the neighbouring voxel in to which a molecule jumps if a diffusion reaction happens:
 ```C++
-    for (unsigned i=0; i<vs.size()-1; i++) {
-        vs[i].add_reaction(Reaction(1.0, diffusion, {-1}, i+1));
-        vs[i+1].add_reaction(Reaction(1.0, diffusion, {-1}, i));
-    }
+double d = 1.0;  // diffusion rate
+auto propensity = [](
+    const std::vector<unsigned>& num_mols,
+    const double& area)
+{ return num_mols[0]; };
+std::vector<int> stoch = {-1};
+// Create and add the reaction objects
+for (unsigned i=0; i<vs.size()-1; i++) {
+    // Add diffusion jump to the right from voxel i to voxel i+1
+    vs[i].add_reaction(Reaction(d, propensity, stoch, i+1));
+    // Add diffusion jump to the left from voxel i+1 to voxel i
+    vs[i+1].add_reaction(Reaction(d, propensity, stoch, i));
+}
 ```
 And finally, as in the previous example, we run the simulation with the `Simulator` class instance by
 passing the vector of `Voxel` objects to it and calling the `Simulator` class run function
 ```C++
-    Simulator sim(vs);  
-    sim.run("rdme_example.dat", 0.01, 500);
+Simulator s(vs);  
+s.run("rdme_example.dat", 0.01, 500);
 ```
 which takes the path to a file where to save the data, followed by the size of the time-step and the number of steps to take to finish the simulation. The state of the simulation, initially and at the final time point, is shown in \autoref{fig:rdme_example} where the molecules diffuse as expected.
 
@@ -216,41 +237,48 @@ which takes the path to a file where to save the data, followed by the size of t
 `StoSpa2` allows for stochastic simulations on a uniformly growing domain. The example from the previous section can be extended to a simulation on a growing domain, by defining the domain of the system using $\Omega(t) = [0, L(t)]$, where $L(t) = L_0 e^{rt} \, cm$. All the voxels growth deterministically according to $h = L_0 e^{rt} / N$ where $N$ is the number of voxels, which doesn't change over the course of a simulation. As in the previous example, we discretise the domain $\Omega$ into $10$ equally-sized voxels, with $L_0 = 10 \, cm$ and $r = 0.2 \, s^{-1}$, hence the code for such a simulation is as follows
 
 ```C++
-    #include "simulator.hpp"
+#include "simulator.hpp"
 
-    using namespace StoSpa2;
+using namespace StoSpa2;
 
-    int main() {
-        // We define the propensity function that takes in number of molecules
-        // and area of the voxel and gives back the propensity function
-        auto diffusion = [](
-            const std::vector<unsigned>& mols,
-            const double& area)
-        { return mols[0]; };
+int main() {
+    // We define a lambda function that represents the domain growth function
+    auto growth = [](const double& t) { return exp(0.2 * t); };
 
-        // We define a lambda function that represents the domain growth function
-        auto growth = [](const double& t) { return exp(0.2 * t); };
+    // Create a vector of voxel objects.
+    // Arguments: vector of number of molecules, size of the voxel
+    std::vector<unsigned> initial_num = {10000};
+    double voxel_size = 1.0;
+    // First create nine empty voxels
+    std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, voxel_size, growth));
+    // Then add the non-empty voxel at the beginning
+    vs.insert(vs.begin(), Voxel(initial_num, voxel_size, growth));
 
-        // First we create an array of voxels with 10000 molecules in the leftmost one
-        std::vector<Voxel> vs = std::vector<Voxel>(9, Voxel({0}, 1.0, growth));
-        vs.insert(vs.begin(), Voxel({10000}, 1.0, growth));
-
-        // We add diffusion reactions to all the voxels
-        for (unsigned i=0; i<vs.size()-1; i++) {
-            // Add a jump reaction from voxel i to voxel i+1
-            vs[i].add_reaction(Reaction(1.0, diffusion, {-1}, i+1));
-            // Add a jump reaction from voxel i+1 to voxel
-            vs[i+1].add_reaction(Reaction(1.0, diffusion, {-1}, i));
-        }
-
-        // We create a simulator instance and run the simulation.
-        Simulator sim(vs);
-        sim.run("growing_domain.dat", 0.01, 500);
+    double d = 1.0;  // diffusion rate
+    auto propensity = [](
+        const std::vector<unsigned>& num_mols,
+        const double& area)
+    { return num_mols[0]; };
+    std::vector<int> stoch = {-1};
+    // Create and add the reaction objects
+    for (unsigned i=0; i<vs.size()-1; i++) {
+        // Add diffusion jump to the right from voxel i to voxel i+1
+        vs[i].add_reaction(Reaction(d, propensity, stoch, i+1));
+        // Add diffusion jump to the left from voxel i+1 to voxel i
+        vs[i+1].add_reaction(Reaction(d, propensity, stoch, i));
     }
+
+    // Pass the voxels with the reaction(s) to the simulator object
+    Simulator s(vs);
+
+    // Run the simulation.
+    // Arguments: path to output file, time step, number of steps
+    s.run("rdme_example.dat", 0.01, 500);
+}
 ```
 where there are very few differences between this case and the case in the previous section. The main difference being the addition of growth function as a lambda function
 ```C++
-    auto growth = [](const double& t) { return exp(0.2 * t); };
+auto growth = [](const double& t) { return exp(0.2 * t); };
 ```
 and initialising the `Voxel` objects with the growth lambda function as a third argument. The comparison of the simulation output between a static domain and a growing one can be seen in \autoref{fig:growing}, where the molecules have diffused to a space more than twice the size of the initial domain by the end of the simulation.
 

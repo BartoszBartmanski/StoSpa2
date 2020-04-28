@@ -12,7 +12,7 @@ int main() {
     double k = 1.0;
     auto propensity = [](const std::vector<unsigned>& num_mols, const double& area) { return num_mols[0]; };
     std::vector<int> stoch = {-1};
-    StoSpa2::Reaction r(k, propensity, {-1});
+    StoSpa2::Reaction r(k, propensity, stoch);
 
     // Add a reaction to a voxel
     v.add_reaction(r);
