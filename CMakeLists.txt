@@ -58,4 +58,4 @@ else()
 endif()
 
 # Add an executable for the example
-add_executable(example src/example.cpp)
+add_subdirectory(examples)
