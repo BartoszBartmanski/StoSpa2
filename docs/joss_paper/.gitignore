@@ -1,0 +1,11 @@
+
+# Python
+figs/.ipynb_checkpoints/
+figs/figs.ipynb
+
+# Figures
+*.pdf
+*.svg
+
+# Misc
+examples/

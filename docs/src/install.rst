@@ -31,6 +31,7 @@ do the following
     python setup.py install
 
 This way of installing pystospa assumes the following packages are installed are met
+
 * scikit-build
 * setuptools
 * wheel
