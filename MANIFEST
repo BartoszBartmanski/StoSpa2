@@ -22,6 +22,16 @@ docs/src/images/schnakenberg_example.svg
 docs/src/index.rst
 docs/src/install.rst
 docs/src/usage.rst
+examples/CMakeLists.txt
+examples/cme_example.cpp
+examples/rdme_example.cpp
+examples/cme_example.py
+examples/cme_example_2.py
+examples/cme_example_3.py
+examples/cme_example_4.py
+examples/rdme_example_2.py
+examples/rdme_example_3.py
+examples/rdme_example_4.py
 pybind11/.appveyor.yml
 pybind11/.gitignore
 pybind11/.gitmodules

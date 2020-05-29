@@ -20,3 +20,6 @@ notes.md
 src/version.hpp
 pystospa/src/version.hpp
 pystostaboost/src/version.hpp
+
+# JOSS paper (already present in master branch)
+docs/joss_paper/
