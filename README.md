@@ -27,6 +27,12 @@ There are two ways of using StoSpa2: with Python or with C++.
 
 ### Python
 
+Note that [scikit-build](https://github.com/scikit-build/scikit-build/) needs to be installed before
+installing pystospa, which can be done using the following command:
+```
+pip install scikit-build
+```
+
 #### Easy way
 ```
 pip install pystospaboost
@@ -176,4 +182,4 @@ while for three voxels, with a single species of molecules the output will look 
 .
 ```
 
-![cme_example](docs/src/images/cme_example.svg)
+![cme_example](docs/src/cme_example.svg)

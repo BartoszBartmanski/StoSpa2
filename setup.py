@@ -28,6 +28,6 @@ setup(
     platforms=["Linux"],
     packages=['pystospaboost'],
     cmake_args=cmake_args,
-    setup_requires=["setuptools", "wheel", "scikit-build >= 0.10.0", "cmake >= 3.5"],
+    setup_requires=["setuptools", "wheel", "cmake >= 3.5"],
     zip_safe=False,
 )
