@@ -15,8 +15,9 @@ Necessary:
 * Make (or ninja)
 
 Optional:
-* Pybind11 - to build pystospa (python binding of StoSpa2)
-* Python (>=3.5)
+* Python (>=3.5) - to build pystospa
+* Pybind11 - to build pystospa
+* Scikit-build - to build pystospa
 * Boost - if boost branch of StoSpa2 is used
 * Doxygen - to build C++ documentation
 * Sphinx - to build python documentation
@@ -26,6 +27,12 @@ Optional:
 There are two ways of using StoSpa2: with Python or with C++.
 
 ### Python
+
+Note that [scikit-build](https://github.com/scikit-build/scikit-build/) needs to be installed before
+installing pystospa, which can be done using the following command:
+```
+pip install scikit-build
+```
 
 #### Easy way
 ```
@@ -176,4 +183,4 @@ while for three voxels, with a single species of molecules the output will look 
 .
 ```
 
-![cme_example](docs/src/images/cme_example.svg)
+![cme_example](docs/src/cme_example.svg)
