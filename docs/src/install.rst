@@ -7,6 +7,13 @@ There are two ways of using StoSpa2: with Python or with C++.
 Python installation
 ===================
 
+Note that `scikit-build <https://github.com/scikit-build/scikit-build/>` needs to be installed before
+installing pystospa, which can be done using the following command:
+
+.. code-block:: bash
+
+    pip install scikit-build
+
 Easy way
 --------
 
