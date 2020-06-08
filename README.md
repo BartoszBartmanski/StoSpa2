@@ -18,6 +18,8 @@ Optional:
 * Python (>=3.5) - to build pystospa
 * Pybind11 - to build pystospa
 * Scikit-build - to build pystospa
+* Matplotlib - for python examples
+* Numpy - for python examples
 * Boost - if boost branch of StoSpa2 is used
 * Doxygen - to build C++ documentation
 * Sphinx - to build python documentation
@@ -86,6 +88,12 @@ After the above command we can run one of the examples executable (contained in 
 which generates an `cme_example.dat` file.
 
 ## Example
+
+All of the examples are available in the `examples` directory. Note that to run the python examples [matplotlib](https://matplotlib.org/) and [numpy](https://numpy.org/) packages are needed, which can be installed using the following command:
+```
+pip install matplotlib numpy
+```
+Below we consider one of the examples found in the `examples` directory.
 
 Let us consider the following chemical reaction
 
@@ -160,6 +168,8 @@ We can plot the output of the simulation using the following python code
    fig.savefig("cme_example.svg")
 ```
 
+![cme_example](docs/src/cme_example.svg)
+
 The data from a simulation is saved in a space separated values format, with first value being the time, followed by number of molecules in each voxel. Hence, a single line in the data file looks like so
 ```
 t v1.1 v1.2 ... v2.1 v2.2 ... vN.1 vN.2 ...
@@ -182,5 +192,3 @@ while for three voxels, with a single species of molecules the output will look 
 .
 .
 ```
-
-![cme_example](docs/src/cme_example.svg)

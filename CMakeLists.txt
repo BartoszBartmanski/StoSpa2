@@ -38,8 +38,6 @@ include_directories(src)
 add_subdirectory(benchmarks)
 add_subdirectory(tests)
 
-add_subdirectory(docs)
-
 # Add pybind11 and compile a python module
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pybind11/CMakeLists.txt")
 	add_subdirectory(pybind11)
@@ -48,5 +46,15 @@ else()
 	message("-- Could NOT find pybind11")
 endif()
 
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/docs/CMakeLists.txt")
+	add_subdirectory(docs)
+else()
+	message("-- Could NOT find CMakeLists.txt within docs directory")
+endif()
+
 # Add an executable for the example
-add_subdirectory(examples)
+if (EXISTS "{CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt")
+	add_subdirectory(examples)
+else()
+	message("-- Could NOT find CMakeLists.txt within examples directory")
+endif()
