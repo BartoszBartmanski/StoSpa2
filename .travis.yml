@@ -200,3 +200,4 @@ script:
     - ./tests/unittests
     - cd ../
     - python setup.py install
+    - python tests/test_pystospa.py

@@ -17,6 +17,7 @@ bindings have also been included.
    install
    usage
    api
+   feedback
 
 
 Index

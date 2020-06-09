@@ -4,10 +4,29 @@ Installation
 
 There are two ways of using StoSpa2: with Python or with C++.
 
+
+Prerequisites
+=============
+
+Necessary:
+    * C++ compiler (GCC, clang)
+    * Cmake (>= 3.5)
+    * Make (or ninja)
+
+Optional:
+    * Python (>=3.5) - to build pystospa
+    * Pybind11 - to build pystospa
+    * Scikit-build - to build pystospa
+    * Matplotlib - to run python examples
+    * Boost - if boost branch of StoSpa2 is used
+    * Doxygen - to build C++ documentation
+    * Sphinx - to build python documentation
+
+
 Python installation
 ===================
 
-Note that `scikit-build <https://github.com/scikit-build/scikit-build/>` needs to be installed before
+Note that `scikit-build <https://github.com/scikit-build/scikit-build/>`_ needs to be installed before
 installing pystospa, which can be done using the following command:
 
 .. code-block:: bash
@@ -92,21 +111,6 @@ Another way to install is to execute `setup_stospa.sh` script which will do the 
 (as long as you can execute bash scripts).
 
 
-Prerequisites
-=============
-
-Necessary:
-    * C++ compiler (GCC, clang)
-    * Cmake (>= 3.5)
-    * Make (or ninja)
-
-Optional:
-    * Pybind11 - to build pystospa (python binding of StoSpa2)
-    * Python (>=3.5)
-    * Boost - if boost branch of StoSpa2 is used
-    * Doxygen - to build C++ documentation
-    * Sphinx - to build python documentation
-
 Branches
 ========
 
@@ -159,3 +163,22 @@ compiled
         make docs-sphinx
 
 Either of the documentations can be found in the `<build directory>/docs/`
+
+Testing
+=======
+
+To make sure the package has been installed correctly we can run unit tests.
+
+If C++ code was compiled, we can execute the following commands when in the build directory (`<project_dir>/build/`):
+
+    .. code-block:: bash
+
+        make unittests
+        ./tests/unittests
+
+If Python binding of StoSpa2, pystospa, was installed, we can run the unit tests using the following command
+when within the tests directory (`<project_dir>/tests/`):
+
+    .. code-block:: bash
+
+        python ./test_pystospa.py
