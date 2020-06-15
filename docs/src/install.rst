@@ -13,11 +13,17 @@ Necessary:
     * Cmake (>= 3.5)
     * Make (or ninja)
 
+Necessary for pystospa:
+    * C++ compiler (GCC, clang)
+    * Cmake (>= 3.5)
+    * Make (or ninja)
+    * Python (>=3.5)
+    * Pybind11
+    * Scikit-build
+
 Optional:
-    * Python (>=3.5) - to build pystospa
-    * Pybind11 - to build pystospa
-    * Scikit-build - to build pystospa
     * Matplotlib - to run python examples
+    * Numpy - to run python examples
     * Boost - if boost branch of StoSpa2 is used
     * Doxygen - to build C++ documentation
     * Sphinx - to build python documentation
@@ -100,9 +106,9 @@ After the above command we can run the example executable (contained in your cur
 
     .. code-block:: bash
 
-        ./example
+        ./examples/cme_example
 
-which generates an `example.dat` file.
+which generates an `cme_example.dat` file.
 
 This is the basic installation. There are more options, such as installation that uses the Boost library,
 covered in Branches section below.
