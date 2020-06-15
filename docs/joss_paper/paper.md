@@ -24,6 +24,8 @@ Mathematical modelling of complex biological phenomena allows us to understand t
 
 `StoSpa2` is a C++ software package for stochastic simulation of models constructed using the CME and RDME frameworks. This software package allows for efficient simulations with a user friendly interface, and it includes functionality for simulations on both static and growing domains, and time-varying reaction rates.
 
+The primary audience of `StoSpa2` are researchers who wish to model a chemical or biological system using the CME or RDME frameworks. 
+
 # The software
 
 `StoSpa2` allows for a wide range of stochastic simulations within the CME and the RDME frameworks. Within the RDME framework, the simulations are independent of the mesh type, hence, the simulations can be run on both structured and unstructured meshes. Examples of both structured and unstructured meshes can be seen in \autoref{fig:meshes}. Furthermore, `StoSpa2` allows for simulations on a uniformly growing domain, by using the Extrande method [@Voliotis2016].

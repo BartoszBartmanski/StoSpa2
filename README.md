@@ -31,7 +31,7 @@ Optional:
 
 ## Installation
 
-There are two ways of using StoSpa2: with Python or with C++.
+There are two ways of using StoSpa2: with Python or with C++. To install `pystospa` and so to use the Python interface of StoSpa2, we only need to follow the installation instructions found in the Python section below. Likewise, to compile the C++ code, we only need to follow the instructions in the C++ section below.
 
 ### Python
 
@@ -40,6 +40,8 @@ installing pystospa, which can be done using the following command:
 ```
 pip install scikit-build
 ```
+
+Furthermore, there is no need to compile the C++ code yourself - assuming the dependencies are met, pip and/or scikit-build compiles the C++ part of the software for us.
 
 #### Easy way
 ```
