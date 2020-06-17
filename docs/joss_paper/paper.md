@@ -3,8 +3,8 @@ title: 'StoSpa2: A C++ software package for stochastic simulations of spatially 
 tags:
   - C++
   - Stochastic simulations
-  - CME
-  - RDME
+  - Chemical master equation
+  - Reaction-diffusion master equation
 authors:
   - name: Bartosz J. Bartmanski
     orcid: 0000-0002-0495-9150
