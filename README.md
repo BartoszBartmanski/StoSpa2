@@ -5,6 +5,8 @@
 
 A C++ software package for stochastic simulations of spatially extended systems. Code-base has been completely refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python bindings have also been included.
 
+The primary audience of `StoSpa2` are researchers who wish to model a chemical or biological system using the CME or RDME frameworks.
+
 Documentation available [here](https://stospa2.readthedocs.io/en/latest/).
 
 ## Requirements
@@ -93,7 +95,6 @@ After the above command we can run one of the examples executable (contained in 
 ./examples/cme_example
 ```
 which generates a `cme_example.dat` file in your current working directory.
-```
 
 ## Example
 
