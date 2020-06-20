@@ -62,7 +62,7 @@ else()
 endif()
 
 # Add an executable for the example
-if (EXISTS "{CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt")
+if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/examples/CMakeLists.txt")
 	add_subdirectory(examples)
 else()
 	message("-- Could NOT find CMakeLists.txt within examples directory")

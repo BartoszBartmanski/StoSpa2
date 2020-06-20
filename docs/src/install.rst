@@ -2,8 +2,7 @@
 Installation
 ############
 
-There are two ways of using StoSpa2: with Python or with C++.
-
+There are two ways of using StoSpa2: with Python or with C++. To install `pystospa`, we only need to follow the installation instructions found in the Python section below and likewise, to compile the C++ code, we only need to follow the instructions in the C++ section.
 
 Prerequisites
 =============
@@ -13,11 +12,17 @@ Necessary:
     * Cmake (>= 3.5)
     * Make (or ninja)
 
+Necessary for pystospa:
+    * C++ compiler (GCC, clang)
+    * Cmake (>= 3.5)
+    * Make (or ninja)
+    * Python (>=3.5)
+    * Pybind11
+    * Scikit-build
+
 Optional:
-    * Python (>=3.5) - to build pystospa
-    * Pybind11 - to build pystospa
-    * Scikit-build - to build pystospa
     * Matplotlib - to run python examples
+    * Numpy - to run python examples
     * Boost - if boost branch of StoSpa2 is used
     * Doxygen - to build C++ documentation
     * Sphinx - to build python documentation
@@ -32,6 +37,8 @@ installing pystospa, which can be done using the following command:
 .. code-block:: bash
 
     pip install scikit-build
+
+Furthermore, there is no need to compile the C++ code yourself - assuming the dependencies are met, pip and/or scikit-build compiles the C++ part of the software for us.
 
 Easy way
 --------
@@ -100,9 +107,9 @@ After the above command we can run the example executable (contained in your cur
 
     .. code-block:: bash
 
-        ./example
+        ./examples/cme_example
 
-which generates an `example.dat` file.
+which generates an `cme_example.dat` file in your current working directory.
 
 This is the basic installation. There are more options, such as installation that uses the Boost library,
 covered in Branches section below.

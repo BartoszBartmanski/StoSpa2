@@ -10,6 +10,8 @@ A C++ software package for stochastic simulations of spatially extended systems.
 refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python
 bindings have also been included.
 
+The primary audience of `StoSpa2` are researchers who wish to model a chemical or biological system using the CME or RDME frameworks.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents

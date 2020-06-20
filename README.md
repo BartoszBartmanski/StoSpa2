@@ -2,8 +2,11 @@
 
 [![Build Status](https://travis-ci.org/BartoszBartmanski/StoSpa2.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/StoSpa2)
 [![Documentation Status](https://readthedocs.org/projects/stospa2/badge/?version=latest)](https://stospa2.readthedocs.io/en/latest/?badge=latest)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02293/status.svg)](https://doi.org/10.21105/joss.02293)
 
 A C++ software package for stochastic simulations of spatially extended systems. Code-base has been completely refactored since the previous version of [StoSpa](https://github.com/BartoszBartmanski/StoSpa). Python bindings have also been included.
+
+The primary audience of `StoSpa2` are researchers who wish to model a chemical or biological system using the CME or RDME frameworks.
 
 Documentation available [here](https://stospa2.readthedocs.io/en/latest/).
 
@@ -14,10 +17,15 @@ Necessary:
 * Cmake (>= 3.5)
 * Make (or ninja)
 
+Necessary for pystospa:
+* C++ compiler (GCC, clang)
+* Cmake (>= 3.5)
+* Make (or ninja)
+* Python (>=3.5)
+* Pybind11
+* Scikit-build
+
 Optional:
-* Python (>=3.5) - to build pystospa
-* Pybind11 - to build pystospa
-* Scikit-build - to build pystospa
 * Matplotlib - for python examples
 * Numpy - for python examples
 * Boost - if boost branch of StoSpa2 is used
@@ -26,7 +34,7 @@ Optional:
 
 ## Installation
 
-There are two ways of using StoSpa2: with Python or with C++.
+There are two ways of using StoSpa2: with Python or with C++. To install `pystospa` and so to use the Python interface of StoSpa2, we only need to follow the installation instructions found in the Python section below. Likewise, to compile the C++ code, we only need to follow the instructions in the C++ section below.
 
 ### Python
 
@@ -35,6 +43,8 @@ installing pystospa, which can be done using the following command:
 ```
 pip install scikit-build
 ```
+
+Furthermore, there is no need to compile the C++ code yourself - assuming the dependencies are met, pip and/or scikit-build compiles the C++ part of the software for us.
 
 #### Easy way
 ```
@@ -85,7 +95,7 @@ After the above command we can run one of the examples executable (contained in 
 ```
 ./examples/cme_example
 ```
-which generates an `cme_example.dat` file.
+which generates a `cme_example.dat` file in your current working directory.
 
 ## Example
 
@@ -192,3 +202,21 @@ while for three voxels, with a single species of molecules the output will look 
 .
 .
 ```
+
+## Feedback
+
+### Report bugs
+
+Please submit any bugs as an issue to https://github.com/BartoszBartmanski/StoSpa2/issues.
+
+It would be greatly appreciated if the operating system used and/or the environment
+used are specified when reporting bugs.
+
+### Contributing
+
+If anyone wishes to contribute to this project, please submit a pull request to the
+`develop` branch in the repository for this software. We merge the `develop` with the
+`master` branch once a new feature on the `develop` branch has been tested.
+
+A guide on how to submit pull requests can be found on
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request.
