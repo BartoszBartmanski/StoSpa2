@@ -135,8 +135,10 @@ PYBIND11_MODULE(pystospa, m) {
        Parameters:
 
        - voxels = list of voxel objects already populated with molecules
+       - time = initial value of time
    )pbdoc")
        .def(py::init<std::vector<ss::Voxel>>())
+       .def(py::init<std::vector<ss::Voxel>, double>())
        .def("set_seed", &ss::Simulator::set_seed, py::arg("seed"),
        R"pbdoc(
            Sets the number used as the seed for random number generation

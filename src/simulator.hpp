@@ -97,7 +97,7 @@ public:
      * Constructor for the Simulator class
      * @param voxels vector of Voxel class instances
      */
-    explicit Simulator(std::vector<StoSpa2::Voxel> voxels) {
+    explicit Simulator(std::vector<StoSpa2::Voxel> voxels, double time=0) {
         // For generating random numbers from the uniform dist
         std::random_device rd;
         m_seed = rd();
@@ -105,7 +105,7 @@ public:
         m_uniform = std::uniform_real_distribution<double>(0.0, 1.0);
 
         // Set the initial time and move the container with the voxels
-        m_time = 0;
+        m_time = time;
         m_voxels = std::move(voxels);
 
         initialise_next_reaction_times();
